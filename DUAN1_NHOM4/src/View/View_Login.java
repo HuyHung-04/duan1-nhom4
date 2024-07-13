@@ -242,6 +242,7 @@ public class View_Login extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         System.exit(0);
+//        asdasds
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
