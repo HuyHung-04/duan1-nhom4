@@ -220,24 +220,24 @@ public class View_Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-//        String TenDangNhap = this.txtTenDangNhap.getText().trim();
-//        String MatKhau = this.txtMatKhau.getText().trim();
-//        String ChucVu = timChucVu(TenDangNhap, MatKhau);
-//        if (isValidate()) {
-//            if (ChucVu != null) {
-//                if (ChucVu.equals("Quan ly")) {
-//                    View_HoaDon view_HoaDon = new View_HoaDon();
-//                    JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Quản Lý");
-//                    view_HoaDon.setVisible(true);
-//                    this.dispose();
-//                } else if (ChucVu.equals("Nhan vien")) {
-//                    JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Nhân viên");
-//                }
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
-//            }
-//        }
+        String TenDangNhap = this.txtTenDangNhap.getText().trim();
+        String MatKhau = this.txtMatKhau.getText().trim();
+        String ChucVu = timChucVu(TenDangNhap, MatKhau);
+        if (isValidate()) {
+            if (ChucVu != null) {
+                if (ChucVu.equals("Quan ly")) {
+                    View_HoaDon view_HoaDon = new View_HoaDon();
+                    JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Quản Lý");
+                    view_HoaDon.setVisible(true);
+                    this.dispose();
+                } else if (ChucVu.equals("Nhan vien")) {
+                    JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Nhân viên");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không hợp lệ", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
