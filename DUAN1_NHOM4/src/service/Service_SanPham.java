@@ -79,30 +79,33 @@ public class Service_SanPham {
         }
     }
 
-    public ArrayList<Model_SanPham> locDanhMuc(String DanhMucTk, String NhaCungCapTK, String TrangThaiTK) {
-        sql = "select MaSanPham,TenSanPham,DanhMucSanPham,NhaCungCap,TrangThai from V_SanPham \n"
-                + "where DanhMucSanPham like ? and NhaCungCap like ? and  TrangThai like ?";
-        ArrayList lsttk = new ArrayList();
-        try{
-            ps = c.prepareStatement(sql);
-            ps.setObject(1,"%" + DanhMucTk + "%");
-            ps.setObject(2,"%" + NhaCungCapTK + "%");
-            ps.setObject(3, TrangThaiTK);
-            rs = ps.executeQuery();
-            while(rs.next()){
-                String masanpham = rs.getString(1);
-                String tensanpham = rs.getString(2);
-                String danhmuc = rs.getString(3);
-                String nhacungcap = rs.getString(4);
-                boolean trangthai = rs.getBoolean(5);
-
-                Model_SanPham model_SanPham = new Model_SanPham(masanpham, tensanpham, danhmuc, nhacungcap, trangthai);
-                lsttk.add(model_SanPham);
-            }
-            return lsttk;
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public ArrayList<Model_SanPham> locDanhMuc(String DanhMucTk, String NhaCungCapTK, String TrangThaiTK) {
+//        sql = "select MaSanPham,TenSanPham,DanhMucSanPham,NhaCungCap,TrangThai from V_SanPham \n"
+//                + "where DanhMucSanPham like ? and NhaCungCap like ? and  TrangThai like ?";
+//        ArrayList lsttk = new ArrayList();
+//        try{
+//            ps = c.prepareStatement(sql);
+//            ps.setObject(1,"%" + DanhMucTk + "%");
+//            ps.setObject(2,"%" + NhaCungCapTK + "%");
+//            ps.setObject(3, TrangThaiTK);
+//            rs = ps.executeQuery();
+//            while(rs.next()){
+//                String masanpham = rs.getString(1);
+//                String tensanpham = rs.getString(2);
+//                String danhmuc = rs.getString(3);
+//                String nhacungcap = rs.getString(4);
+//                boolean trangthai = rs.getBoolean(5);
+//
+//                Model_SanPham model_SanPham = new Model_SanPham(masanpham, tensanpham, danhmuc, nhacungcap, trangthai);
+//                lsttk.add(model_SanPham);
+//            }
+//            return lsttk;
+//        }catch(Exception e){
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+    
+    
+    
 }
