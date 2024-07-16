@@ -76,6 +76,7 @@ Gia float,
 SoLuong int,
 TrangThai bit
 )
+select * from SanPhamChiTiet
 go
 create table NhaCungCap(
 ID_NhaCungCap int identity(1,1) primary key,
@@ -85,6 +86,9 @@ SoDienThoai varchar(10),
 DiaChi nvarchar(100),
 TrangThai bit
 )
+select * from NhaCungCap
+alter table NhaCungCap
+add MaNhaCungCap varchar(10);
 go
 create table DanhMucSanPham(
 ID_DanhMuc int identity(1,1) primary key,
@@ -161,15 +165,16 @@ values
 go
 
 -- Inserting data into NhaCungCap
-insert into NhaCungCap (TenNhaCungCap, Email, SoDienThoai, DiaChi, TrangThai)
+insert into NhaCungCap (TenNhaCungCap, Email, SoDienThoai, DiaChi, TrangThai,MaNhaCungCap)
 values
-(N'Cong ty A', 'cta@example.com', '0912345670', N'Ha Noi', 1),
-(N'Cong ty B', 'ctb@example.com', '0908765431', N'Hai Phong', 1),
-(N'Cong ty C', 'ctc@example.com', '0934567880', N'Da Nang', 1),
-(N'Cong ty D', 'ctd@example.com', '0923456779', N'Ho Chi Minh', 1),
-(N'Cong ty E', 'cte@example.com', '0912345669', N'Can Tho', 1);
+(N'Cong ty A', 'cta@example.com', '0912345670', N'Ha Noi', 1,'CT01'),
+(N'Cong ty B', 'ctb@example.com', '0908765431', N'Hai Phong', 1,'CT02'),
+(N'Cong ty C', 'ctc@example.com', '0934567880', N'Da Nang', 1,'CT03'),
+(N'Cong ty D', 'ctd@example.com', '0923456779', N'Ho Chi Minh', 1,'CT04'),
+(N'Cong ty E', 'cte@example.com', '0912345669', N'Can Tho', 1,'CT05');
 go
-
+select * from NhaCungCap
+GO
 -- Inserting data into DanhMucSanPham
 insert into DanhMucSanPham (MaDanhMuc, TenDanhMuc, TrangThai)
 values
@@ -269,5 +274,29 @@ values
 (4, 4, 5, 5000, 1),
 (5, 5, 6, 6000, 1);
 go
+create view V_ThuocTinhSanPham
+as
+select SanPhamChiTiet.MaSanPhamChiTiet,
+       Mau.MaMau,
+       Mau.TenMau,
+	   Size.MaSize,
+	   Size.TenSize,
+	   NhaCungCap.MaNhaCungCap,
+	   NhaCungCap.TenNhaCungCap,
+	   DeGiay.MaDeGiay,
+	   DeGiay.TenDeGiay,
+	   ChatLieu.MaChatLieu,
+	   ChatLieu.TenChatLieu from SanPhamChiTiet
+inner join Mau on SanPhamChiTiet.ID_SanPhamChiTiet = Mau.ID_Mau
+inner join Size on SanPhamChiTiet.ID_SanPhamChiTiet = Size.ID_Size
+inner join NhaCungCap on SanPhamChiTiet.ID_SanPhamChiTiet = NhaCungCap.ID_NhaCungCap
+inner join DeGiay on SanPhamChiTiet.ID_SanPhamChiTiet = DeGiay.ID_DeGiay
+inner join ChatLieu on SanPhamChiTiet.ID_SanPhamChiTiet = ChatLieu.ID_ChatLieu
+select MaMau,TenMau,MaSize,TenSize,MaNhaCungCap,TenNhaCungCap,MaDeGiay,TenDeGiay,MaChatLieu,TenChatLieu from V_ThuocTinhSanPham
 
-
+insert into NhaCungCap(MaNhaCungCap,TenNhaCungCap) values(?,?)
+insert into ChatLieu(MaChatLieu,TenChatLieu) values(?,?)
+insert into Mau(MaMau,TenMau) values(?,?)
+insert into DeGiay(MaDeGiay,TenDeGiay) values(?,?)
+insert into Size(MaSize,TenSize) values(?,?)
+update NhaCungCap set TenNhaCungCap = ? where ID_NhaCungCap = ?
