@@ -23,7 +23,9 @@ public class Service_SanPham {
 
     public ArrayList<Model_SanPham> getAll() {
         ArrayList<Model_SanPham> lstsp = new ArrayList<>();
-        sql = "select MaSanPham, TenSanPham, DanhMucSanPham, NhaCungCap, TrangThai from V_SanPham";
+        sql = "select MaSanPham,TenSanPham,dmsp.TenDanhMuc as DanhMucSanPham ,ncc.TenNhaCungCap as NhaCungCap,sp.TrangThai as TrangThai from SanPham sp\n"
+                + "join NhaCungCap ncc on ncc.ID_NhaCungCap = sp.ID_NhaCungCap\n"
+                + "join DanhMucSanPham dmsp on dmsp.ID_DanhMuc = sp.ID_DanhMucSanPham";
         try {
             ps = c.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -148,10 +150,9 @@ public class Service_SanPham {
             return false;
         }
     }
-    
-    
+
     public Model_SanPham checkTrungMaSanPham(String maForm) {
-        
+
         sql = "select MaSanPham, TenSanPham, DanhMucSanPham, NhaCungCap, TrangThai from V_SanPham where MaSanPham = ?";
         Model_SanPham msp = null;
         try {
@@ -175,14 +176,12 @@ public class Service_SanPham {
         }
     }
 
-    
-    
     public ArrayList<Model_SanPham> timKiem(String tenSP) {
         ArrayList lstsp = new ArrayList<>();
         sql = "select MaSanPham, TenSanPham, DanhMucSanPham, NhaCungCap, TrangThai from V_SanPham where TenSanPham like ?";
         try {
             ps = c.prepareStatement(sql);
-            ps.setObject(1, "%"+tenSP+"%");
+            ps.setObject(1, "%" + tenSP + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 String masanpham = rs.getString(1);
@@ -200,4 +199,64 @@ public class Service_SanPham {
             return null;
         }
     }
+
+//    Loc
+    public ArrayList<Model_SanPham> getSanPhamLoc(int danhMuccbb, int nhaCungCapcbb, int trangThaicbb) {
+        ArrayList<Model_SanPham> lstsp = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("""
+          select MaSanPham, TenSanPham, dmsp.TenDanhMuc as DanhMucSanPham, ncc.TenNhaCungCap as NhaCungCap, sp.TrangThai as TrangThai 
+          from SanPham sp
+          inner join NhaCungCap ncc on ncc.ID_NhaCungCap = sp.ID_NhaCungCap
+          inner join DanhMucSanPham dmsp on dmsp.ID_DanhMuc = sp.ID_DanhMucSanPham
+          where 1 = 1""");
+
+        if (danhMuccbb != 0) {
+            sql.append(" and dmsp.ID_DanhMuc = ").append(danhMuccbb);
+        }
+        if (nhaCungCapcbb != 0) {
+            sql.append(" and ncc.ID_NhaCungCap = ").append(nhaCungCapcbb);
+        }
+        if (trangThaicbb == 1) {
+            sql.append(" and sp.TrangThai = 1");
+        } else if (trangThaicbb == 2) {
+            sql.append(" and sp.TrangThai = 0");
+        }
+
+        try (PreparedStatement ps = c.prepareStatement(sql.toString()); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String masanpham = rs.getString("MaSanPham");
+                String tensanpham = rs.getString("TenSanPham");
+                String danhmuc = rs.getString("DanhMucSanPham");
+                String nhacungcap = rs.getString("NhaCungCap");
+                boolean trangthai = rs.getBoolean("TrangThai");
+
+                Model_SanPham model_SanPham = new Model_SanPham(masanpham, tensanpham, danhmuc, nhacungcap, trangthai);
+                lstsp.add(model_SanPham);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return lstsp;
+    }
+
+    // get DanhMucSanPham
+    public ArrayList<String> getTenSanPham() {
+        sql = "select TenSanPham from SanPham";
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Tất Cả");
+        try {
+            ps = c.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String tensp = rs.getString(1);
+                list.add(tensp);
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
