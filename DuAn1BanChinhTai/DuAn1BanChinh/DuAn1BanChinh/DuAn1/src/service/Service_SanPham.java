@@ -45,6 +45,22 @@ public class Service_SanPham {
             return null;
         }
     }
+    
+    public ArrayList<String> getNameSP() {
+        ArrayList<String> lstsp = new ArrayList<>();
+        sql = "Select TenSanPham from sanpham";
+        try {
+            ps = c.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                lstsp.add(rs.getString(1));
+            }
+            return lstsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public ArrayList<String> getDanhMuc() {
         sql = "select TenDanhMuc from DanhMucSanPham";
@@ -244,7 +260,6 @@ public class Service_SanPham {
     public ArrayList<String> getTenSanPham() {
         sql = "select TenSanPham from SanPham";
         ArrayList<String> list = new ArrayList<>();
-        list.add("Tất Cả");
         try {
             ps = c.prepareStatement(sql);
             rs = ps.executeQuery();

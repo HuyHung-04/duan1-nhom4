@@ -9,7 +9,7 @@ package Model;
  * @author Admin
  */
 public class Model_SanPhamChiTiet {
-
+    private int id;
     private String MaSanPhamChiTiet;
     private String TenSanPhamChiTiet;
     private int soLuong;
@@ -19,11 +19,13 @@ public class Model_SanPhamChiTiet {
     private String chatLieu;
     private String deGiay;
     private boolean trangThai;
+    private String TenSanPham;
 
     public Model_SanPhamChiTiet() {
     }
 
-    public Model_SanPhamChiTiet(String MaSanPhamChiTiet, String TenSanPhamChiTiet, int soLuong, int gia, String mau, String size, String chatLieu, String deGiay, boolean trangThai) {
+    public Model_SanPhamChiTiet(int id, String MaSanPhamChiTiet, String TenSanPhamChiTiet, int soLuong, int gia, String mau, String size, String chatLieu, String deGiay, boolean trangThai, String TenSanPham) {
+        this.id = id;
         this.MaSanPhamChiTiet = MaSanPhamChiTiet;
         this.TenSanPhamChiTiet = TenSanPhamChiTiet;
         this.soLuong = soLuong;
@@ -33,6 +35,15 @@ public class Model_SanPhamChiTiet {
         this.chatLieu = chatLieu;
         this.deGiay = deGiay;
         this.trangThai = trangThai;
+        this.TenSanPham = TenSanPham; 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMaSanPhamChiTiet() {
@@ -106,11 +117,18 @@ public class Model_SanPhamChiTiet {
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
+    public String getTenSanPham() {
+        return TenSanPham;
+    }
+
+    public void setTenSanPham(String MaSanPhamChiTiet) {
+        this.TenSanPham = MaSanPhamChiTiet;
+    }
 
     public Object[] toDataRow() {
         return new Object[]{
             getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getSoLuong(), getGia(),
-             getMau(), getSize(), getChatLieu(), getDeGiay(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động"};
+             getMau(), getSize(), getChatLieu(), getDeGiay(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động",getTenSanPham()};
     }
 
 }

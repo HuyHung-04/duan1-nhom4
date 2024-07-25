@@ -12,6 +12,15 @@ import model.Model_SanPham;
 import model.Model_ThuocTinhSanPham;
 import service.Service_SanPham;
 import Model.Model_SanPhamChiTiet;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import javax.swing.DefaultComboBoxModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import service.Service_SanPhamChiTiet;
 
 /**
@@ -38,6 +47,8 @@ public class View_SanPham extends javax.swing.JPanel {
         cbbSanPhamLoc.removeAllItems();
         cbbTenSanPham.removeAllItems();
 
+        this.themtensanpham();
+
         String tkdanhmucdefault = "Chọn danh mục";
         String tknhacungcapdefault = "Chọn nhà cung cấp";
         String tktensanpham = "Chọn tên sản phẩm";
@@ -54,10 +65,11 @@ public class View_SanPham extends javax.swing.JPanel {
             cbbNhaCungCap.addItem(nhacungcap);
             cbbNhaCungCapLoc.addItem(nhacungcap);
         }
-
+        String chonloctensp = "Tất cả";
+        cbbSanPhamLoc.addItem(chonloctensp);
         for (String tensanpham : lsttsap) {
             cbbSanPhamLoc.addItem(tensanpham);
-            cbbTenSanPham.addItem(tensanpham);
+//            cbbTenSanPham.addItem(tensanpham);
         }
 
         fillTableNhaCungCap(sttsp.getAllNhaCungCap());
@@ -178,11 +190,19 @@ public class View_SanPham extends javax.swing.JPanel {
     }
 
     public void fillTableSanPhamCHiTiet() {
+//        DefaultTableModel dblModel = (DefaultTableModel) tblSanPhamChiTiet.getModel();
+//        dblModel.setRowCount(0);
+//
+//        for (Model_SanPhamChiTiet x : qLy.getAll(cbbSizeLoc.getSelectedIndex(), cbbMauLoc.getSelectedIndex(), cbbChatLieuLoc.getSelectedIndex(), cbbSanPhamLoc.getSelectedIndex())) {
+//            dblModel.addRow(x.toDataRow());
+//        }
         DefaultTableModel dblModel = (DefaultTableModel) tblSanPhamChiTiet.getModel();
         dblModel.setRowCount(0);
+        list.clear(); // Clear the existing list
 
         for (Model_SanPhamChiTiet x : qLy.getAll(cbbSizeLoc.getSelectedIndex(), cbbMauLoc.getSelectedIndex(), cbbChatLieuLoc.getSelectedIndex(), cbbSanPhamLoc.getSelectedIndex())) {
             dblModel.addRow(x.toDataRow());
+            list.add(x); // Populate the list
         }
     }
 
@@ -251,6 +271,7 @@ public class View_SanPham extends javax.swing.JPanel {
         cbbChatLieu.setSelectedItem(tblSanPhamChiTiet.getValueAt(index, 6).toString());
         cbbDeGiay.setSelectedItem(tblSanPhamChiTiet.getValueAt(index, 7).toString());
         cbbTrangThaiSPCT.setSelectedItem(tblSanPhamChiTiet.getValueAt(index, 8).toString());
+        cbbTenSanPham.setSelectedItem(tblSanPhamChiTiet.getValueAt(index, 9).toString());
     }
 
     public void lamMoi() {
@@ -267,6 +288,7 @@ public class View_SanPham extends javax.swing.JPanel {
         cbbSanPhamLoc.setSelectedIndex(0);
         cbbChatLieuLoc.setSelectedIndex(0);
         cbbMauLoc.setSelectedIndex(0);
+        cbbTenSanPham.setSelectedIndex(0);
 
     }
 
@@ -296,6 +318,7 @@ public class View_SanPham extends javax.swing.JPanel {
     }
 
     Model_SanPhamChiTiet readFormSanPhamChiTiet() {
+        int id = tblSanPhamChiTiet.getSelectedRow() + 1;
         String masp = txtspct.getText();
         if (masp.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Mã không được để trống");
@@ -319,7 +342,8 @@ public class View_SanPham extends javax.swing.JPanel {
         String chatLieu = cbbChatLieu.getSelectedItem().toString();
         String deGiay = cbbDeGiay.getSelectedItem().toString();
         boolean trangThai = cbbTrangThaiSPCT.getSelectedIndex() == 0;
-        return new Model_SanPhamChiTiet(masp, ten, soLuong, gia, mau, size, chatLieu, deGiay, trangThai);
+        String tensanpham = cbbTenSanPham.getSelectedItem().toString();
+        return new Model_SanPhamChiTiet(id, masp, ten, soLuong, gia, mau, size, chatLieu, deGiay, trangThai, tensanpham);
     }
 
     public boolean checkNull() {
@@ -946,11 +970,11 @@ public class View_SanPham extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã sản phẩm chi tiết", "Tên sản phẩm chi tiết", "Số lượng", "Giá", "Màu", "Size", "Chất liệu", "Đế giày", "Trạng thái"
+                "Mã sản phẩm chi tiết", "Tên sản phẩm chi tiết", "Số lượng", "Giá", "Màu", "Size", "Chất liệu", "Đế giày", "Trạng thái", "Tên Sản Phẩm"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, true, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1407,7 +1431,15 @@ public class View_SanPham extends javax.swing.JPanel {
             Model_SanPham model = readForm();
             boolean success = ssp.updateSanPham(model.getMasanpham(), model.getTensanpham(),
                     model.getDanhmuc(), model.getNhacungcap(), model.isTrangthai());
-
+            cbbSanPhamLoc.removeAllItems();
+            cbbTenSanPham.removeAllItems();
+            String chonloctensp = "Tất cả";
+            cbbSanPhamLoc.addItem(chonloctensp);
+            ArrayList<String> lsttsap = ssp.getTenSanPham();
+            for (String tensanpham : lsttsap) {
+                cbbSanPhamLoc.addItem(tensanpham);
+//                cbbTenSanPham.addItem(tensanpham);
+            }
             if (success) {
                 JOptionPane.showMessageDialog(this, "Sản phẩm đã được sửa thành công!");
                 this.fillTable(ssp.getAll());
@@ -1429,7 +1461,15 @@ public class View_SanPham extends javax.swing.JPanel {
                 Model_SanPham model = readForm();
                 boolean success = ssp.addSanPham(model.getMasanpham(), model.getTensanpham(),
                         model.getDanhmuc(), model.getNhacungcap(), model.isTrangthai());
-                
+                cbbSanPhamLoc.removeAllItems();
+                cbbTenSanPham.removeAllItems();
+                String chonloctensp = "Tất cả";
+                cbbSanPhamLoc.addItem(chonloctensp);
+                ArrayList<String> lsttsap = ssp.getTenSanPham();
+                for (String tensanpham : lsttsap) {
+                    cbbSanPhamLoc.addItem(tensanpham);
+//                    cbbTenSanPham.addItem(tensanpham);
+                }
                 if (success) {
                     JOptionPane.showMessageDialog(this, "Sản phẩm đã được thêm thành công!");
                     this.fillTable(ssp.getAll());
@@ -1438,6 +1478,8 @@ public class View_SanPham extends javax.swing.JPanel {
                 }
             }
         }
+
+        this.themtensanpham();
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void cbbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbTrangThaiActionPerformed
@@ -1449,7 +1491,6 @@ public class View_SanPham extends javax.swing.JPanel {
         if (txtTimKiemSanPham.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Bạn chưa nhập tên sản phẩm tìm kiếm");
             txtTimKiemSanPham.requestFocus();
-            return;
         } else {
             if (ssp.timKiem(txtTimKiemSanPham.getText()).isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Không tìm thấy gì");
@@ -1803,7 +1844,7 @@ public class View_SanPham extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Mã này đã tồn tại!");
             } else {
                 if (checkNumber()) {
-                    qLy.them(readFormSanPhamChiTiet(), cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1);
+                    qLy.them(readFormSanPhamChiTiet(), cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1, cbbTenSanPham.getSelectedIndex() + 1);
                     fillTableSanPhamCHiTiet();
                     JOptionPane.showMessageDialog(this, "Thêm thành công");
                 }
@@ -1813,14 +1854,15 @@ public class View_SanPham extends javax.swing.JPanel {
 
     private void btnSuaChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaChiTietSanPhamActionPerformed
         int i = tblSanPhamChiTiet.getSelectedRow();
-        if(i==-1){
+        if (i == -1) {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa");
             return;
         }
         if (checkNull()) {
 
             if (checkNumber()) {
-                qLy.sua(readFormSanPhamChiTiet(), cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1);
+                qLy.sua(readFormSanPhamChiTiet(), cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1, cbbTenSanPham.getSelectedIndex() + 1);
+                System.out.println(cbbTenSanPham.getSelectedIndex() + 1);
                 fillTableSanPhamCHiTiet();
                 JOptionPane.showMessageDialog(this, "Sửa thành công");
             }
@@ -1832,9 +1874,119 @@ public class View_SanPham extends javax.swing.JPanel {
         this.lamMoi();
         txtspct.setEnabled(true);
     }//GEN-LAST:event_btnLamMoiChiTietSanPhamActionPerformed
-
+    ArrayList<Model_SanPhamChiTiet> list = new ArrayList<>();
     private void btnXuatFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXuatFileActionPerformed
-        // TODO add your handling code here:
+//       try {
+//            XSSFWorkbook fWorkbook = new XSSFWorkbook();
+//            XSSFSheet fSheet = fWorkbook.createSheet("chitietsanpham");
+//            XSSFRow row = null;
+//            Cell cell = null;
+//
+//            // Tạo dòng tiêu đề
+//            row = fSheet.createRow(3);
+//            cell = row.createCell(0, CellType.STRING);
+//            cell.setCellValue("Mã sản phẩm chi tiết");
+//            cell = row.createCell(1, CellType.STRING);
+//            cell.setCellValue("Tên sản phẩm chi tiết");
+//            cell = row.createCell(2, CellType.STRING);
+//            cell.setCellValue("Số lượng");
+//            cell = row.createCell(3, CellType.STRING);
+//            cell.setCellValue("Giá");
+//            cell = row.createCell(4, CellType.STRING);
+//            cell.setCellValue("Màu");
+//            cell = row.createCell(5, CellType.STRING);
+//            cell.setCellValue("Size");
+//            cell = row.createCell(6, CellType.STRING);
+//            cell.setCellValue("Chất liệu");
+//            cell = row.createCell(7, CellType.STRING);
+//            cell.setCellValue("Đế giày");
+//            cell = row.createCell(8, CellType.STRING);
+//            cell.setCellValue("Trạng thái");
+//            cell = row.createCell(9, CellType.STRING);
+//            cell.setCellValue("Tên sản phẩm");
+//
+//            // Điền dữ liệu vào các dòng
+//            for (int i = 0; i < list.size(); i++) {
+//                Model_SanPhamChiTiet spct = list.get(i);
+//                row = fSheet.createRow(4 + i);
+//                cell = row.createCell(0, CellType.STRING);
+//                cell.setCellValue(list.get(i).getMaSanPhamChiTiet());
+//
+//                cell = row.createCell(1, CellType.STRING);
+//                cell.setCellValue(list.get(i).getTenSanPhamChiTiet());
+//
+//                cell = row.createCell(2, CellType.STRING);
+//                cell.setCellValue(String.valueOf(list.get(i).getSoLuong()));
+//
+//                cell = row.createCell(3, CellType.STRING);
+//                cell.setCellValue(String.valueOf(list.get(i).getGia())); 
+//
+//                cell = row.createCell(4, CellType.STRING);
+//                cell.setCellValue(list.get(i).getMau());
+//
+//                cell = row.createCell(5, CellType.STRING);
+//                cell.setCellValue(list.get(i).getSize());
+//
+//                cell = row.createCell(6, CellType.STRING);
+//                cell.setCellValue(list.get(i).getChatLieu());
+//
+//                cell = row.createCell(7, CellType.STRING);
+//                cell.setCellValue(list.get(i).getDeGiay());
+//
+//                cell = row.createCell(8, CellType.STRING);
+//                cell.setCellValue(list.get(i).isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động"); 
+//
+//                cell = row.createCell(9, CellType.STRING);
+//                cell.setCellValue(list.get(i).getTenSanPham());
+//            }
+//            // Ghi dữ liệu ra file
+//            File f = new File("D://chitietsanpham.xlsx");
+//            FileOutputStream fis = new FileOutputStream(f);
+//            fWorkbook.write(fis);
+//            fis.close();
+//            JOptionPane.showMessageDialog(this, "Xuất file thành công", "", JOptionPane.INFORMATION_MESSAGE);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        try {
+            XSSFWorkbook fWorkbook = new XSSFWorkbook();
+            XSSFSheet fSheet = fWorkbook.createSheet("chitietsanpham");
+            XSSFRow row = null;
+            Cell cell = null;
+
+            // Create header row
+            row = fSheet.createRow(3);
+            String[] headers = {"Mã sản phẩm chi tiết", "Tên sản phẩm chi tiết", "Số lượng", "Giá", "Màu", "Size", "Chất liệu", "Đế giày", "Trạng thái", "Tên sản phẩm"};
+            for (int i = 0; i < headers.length; i++) {
+                cell = row.createCell(i, CellType.STRING);
+                cell.setCellValue(headers[i]);
+            }
+
+            // Fill data rows
+            for (int i = 0; i < list.size(); i++) {
+                Model_SanPhamChiTiet spct = list.get(i);
+                row = fSheet.createRow(4 + i);
+                row.createCell(0, CellType.STRING).setCellValue(spct.getMaSanPhamChiTiet());
+                row.createCell(1, CellType.STRING).setCellValue(spct.getTenSanPhamChiTiet());
+                row.createCell(2, CellType.STRING).setCellValue(String.valueOf(spct.getSoLuong()));
+                row.createCell(3, CellType.STRING).setCellValue(String.valueOf(spct.getGia()));
+                row.createCell(4, CellType.STRING).setCellValue(spct.getMau());
+                row.createCell(5, CellType.STRING).setCellValue(spct.getSize());
+                row.createCell(6, CellType.STRING).setCellValue(spct.getChatLieu());
+                row.createCell(7, CellType.STRING).setCellValue(spct.getDeGiay());
+                row.createCell(8, CellType.STRING).setCellValue(spct.isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động");
+                row.createCell(9, CellType.STRING).setCellValue(spct.getTenSanPham());
+            }
+
+            // Write the data to a file
+            File f = new File("D://chitietsanpham.xlsx");
+            FileOutputStream fis = new FileOutputStream(f);
+            fWorkbook.write(fis);
+            fis.close();
+            JOptionPane.showMessageDialog(this, "Xuất file thành công", "", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnXuatFileActionPerformed
 
     private void cbbSizeLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbSizeLocActionPerformed
@@ -1969,4 +2121,14 @@ public class View_SanPham extends javax.swing.JPanel {
     private javax.swing.JTextField txtspct;
     private javax.swing.JTextField txttspct;
     // End of variables declaration//GEN-END:variables
+
+    public void themtensanpham() {
+        DefaultComboBoxModel comboBox = (DefaultComboBoxModel) cbbTenSanPham.getModel();
+        comboBox.removeAllElements();
+
+        for (String x : ssp.getNameSP()) {
+            comboBox.addElement(x);
+        }
+    }
+
 }

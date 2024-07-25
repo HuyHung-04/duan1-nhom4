@@ -26,11 +26,11 @@ public class Service_SanPhamChiTiet {
             conn = DBConnect.getConnection();
             StringBuilder sql = new StringBuilder("""
                   select 
-                  	spct.MaSanPhamChiTiet, spct.TenSanPham, spct.SoLuong, spct.Gia,
+                  	 spct.MaSanPhamChiTiet, spct.TenSanPham, spct.SoLuong, spct.Gia,
                   	m.TenMau, s.TenSize, c.TenChatLieu, d.TenDeGiay,
-                  	spct.TrangThai
+                  	spct.TrangThai,sp.TenSanPham, spct.ID_SanPhamChiTiet
                   from SanPhamChiTiet spct
-                  left join SanPham sp on spct.ID_SanPhamChiTiet = sp.ID_SanPham
+                  left join SanPham sp on spct.ID_SanPham = sp.ID_SanPham
                   left join Mau M ON spct.ID_Mau = M.ID_Mau
                   left join Size S on spct.ID_Size = S.ID_Size
                   left join ChatLieu C  on spct.ID_ChatLieu = c.ID_ChatLieu
@@ -52,7 +52,8 @@ public class Service_SanPhamChiTiet {
             ps = conn.prepareStatement(sql.toString());
             rs = ps.executeQuery();
             
-            while (rs.next()) {                
+            while (rs.next()) {      
+                int id = rs.getInt(11);
                 String ma = rs.getString(1);
                 String ten = rs.getString(2);
                 int soLuong = rs.getInt(3);
@@ -61,8 +62,9 @@ public class Service_SanPhamChiTiet {
                 String size = rs.getString(6);
                 String chatlieu= rs.getString(7);
                 String degiay = rs.getString(8);
-                boolean trangthai = rs.getBoolean(9);               
-                Model_SanPhamChiTiet sptc = new Model_SanPhamChiTiet(ma, ten, soLuong, gia, mau, size, chatlieu, degiay, trangthai);
+                boolean trangthai = rs.getBoolean(9);
+                String tensanpham = rs.getString(10);
+                Model_SanPhamChiTiet sptc = new Model_SanPhamChiTiet(id, ma, ten, soLuong, gia, mau, size, chatlieu, degiay, trangthai,tensanpham);
                 list.add(sptc);
             }
             return list;
@@ -71,14 +73,14 @@ public class Service_SanPhamChiTiet {
             return null;
         }
     }
-    public int them(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay) {
+    public int them(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay, int sanPham) {
         try {
             conn = DBConnect.getConnection();
             sql = """
                   insert into SanPhamChiTiet
-                        	(MaSanPhamChiTiet,TenSanPham,SoLuong,Gia,ID_Mau,ID_Size,ID_ChatLieu,ID_DeGiay,TrangThai)
+                        	(MaSanPhamChiTiet,TenSanPham,SoLuong,Gia,ID_Mau,ID_Size,ID_ChatLieu,ID_DeGiay,TrangThai,ID_SanPham)
                         values 
-                        	(?, ?, ?, ?, ?, ?, ?, ?, ?)""";
+                        	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
                   
             ps = conn.prepareStatement(sql);
             
@@ -93,6 +95,7 @@ public class Service_SanPhamChiTiet {
             ps.setInt(7, chatLieu);
             ps.setInt(8, deGiay);          
             ps.setBoolean(9, spct.isTrangThai());
+            ps.setInt(10, sanPham);
             
             return ps.executeUpdate();
             
@@ -101,13 +104,13 @@ public class Service_SanPhamChiTiet {
             return 0;
         }
     }
-    public int sua(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay) {
+    public int sua(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay, int sanPham) {
         try {
             conn = DBConnect.getConnection();
             sql = """
                   update SanPhamChiTiet
-                        	set TenSanPham = ?,SoLuong=?,Gia=?,ID_Mau=?,ID_Size=?,ID_ChatLieu=?,ID_DeGiay=?,TrangThai=?
-                  where MaSanPhamChiTiet = ?
+                        	set TenSanPham = ?,SoLuong=?,Gia=?,ID_Mau=?,ID_Size=?,ID_ChatLieu=?,ID_DeGiay=?,TrangThai=?,ID_SanPham=?
+                  where ID_SanPhamChiTiet = ?
                        """;
                   
             ps = conn.prepareStatement(sql);
@@ -122,7 +125,8 @@ public class Service_SanPhamChiTiet {
             ps.setInt(6, chatLieu);
             ps.setInt(7, deGiay);          
             ps.setBoolean(8, spct.isTrangThai());
-            ps.setString(9, spct.getMaSanPhamChiTiet());
+            ps.setInt(9, sanPham);
+            ps.setInt(10, spct.getId());
             
             return ps.executeUpdate();
             
