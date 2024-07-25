@@ -273,5 +273,30 @@ public class Service_SanPham {
             return null;
         }
     }
+    
+    public Model_SanPham checkTrungTenSanPham(String tentr) {
+
+        sql = "select MaSanPham, TenSanPham, DanhMucSanPham, NhaCungCap, TrangThai from V_SanPham where TenSanPham = ?";
+        Model_SanPham msp = null;
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String masanpham = rs.getString(1);
+                String tensanpham = rs.getString(2);
+                String danhmuc = rs.getString(3);
+                String nhacungcap = rs.getString(4);
+                boolean trangthai = rs.getBoolean(5);
+
+                Model_SanPham model_SanPham = new Model_SanPham(masanpham, tensanpham, danhmuc, nhacungcap, trangthai);
+                msp = model_SanPham;
+            }
+            return msp;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 }

@@ -499,4 +499,124 @@ public class Service_ThuocTinhSanPham {
         }
         return 0;
     }
+    
+    public Model_ThuocTinhSanPham ckeckTenDanhMuc(String tentr) {
+        sql = "select MaDanhMuc,TenDanhMuc from DanhMucSanPham where TenDanhMuc = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Model_ThuocTinhSanPham ckeckTenSize(String tentr) {
+        sql = "select MaSize,TenSize from Size where TenSize = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Model_ThuocTinhSanPham ckeckTenDeGiay(String tentr) {
+        sql = "select MaDeGiay,TenDeGiay from DeGiay where TenDeGiay = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Model_ThuocTinhSanPham ckeckTenMau(String tentr) {
+        sql = "select MaMau,TenMau from Mau where TenMau = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Model_ThuocTinhSanPham ckeckTenChatLieu(String tentr) {
+        sql = "select MaChatLieu,TenChatLieu from ChatLieu where TenChatLieu = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1,tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public Model_ThuocTinhSanPham ckeckTenNhaCungCap(String tentr) {
+        sql = "select MaNhaCungCap,TenNhaCungCap from NhaCungCap where TenNhaCungCap = ?";
+        Model_ThuocTinhSanPham ttsp = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setObject(1, tentr);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ma, ten;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                ttsp = new Model_ThuocTinhSanPham(ma, ten);
+            }
+            return ttsp;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

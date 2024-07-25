@@ -383,60 +383,60 @@ public class View_Voucher extends javax.swing.JPanel {
         boolean tt = true;
         ma = txtMa.getText();
         if (ma.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Mã không được để trống", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Mã không được để trống", "", JOptionPane.ERROR_MESSAGE);
             txtMa.requestFocus();
             return null;
         }
         ten = txtTen.getText();
         if (ten.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tên không được để trống", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tên không được để trống", "", JOptionPane.ERROR_MESSAGE);
             txtTen.requestFocus();
             return null;
         }
         String slStr = txtSoLuong.getText();
         if (slStr.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Số lượng không được để trống", "", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Số lượng không được để trống", "", JOptionPane.ERROR_MESSAGE);
         txtSoLuong.requestFocus();
         return null;
     }
     try {
         sl = Integer.valueOf(slStr);
         if (sl <= 0) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
             txtSoLuong.requestFocus();
             return null;
         }
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Số lượng phải là số", "", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Số lượng phải là số", "", JOptionPane.ERROR_MESSAGE);
         txtSoLuong.requestFocus();
         return null;
     }
         phantram = txtPhanTram.getText();
         if (phantram.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Phần trăm không được để trống", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Phần trăm không được để trống", "", JOptionPane.ERROR_MESSAGE);
             txtPhanTram.requestFocus();
             return null;
         }
         try {
             int phantramvalue = Integer.valueOf(phantram);
             if (phantramvalue <= 0) {
-                JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải lớn hơn 0", "", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
                 txtPhanTram.requestFocus();
                 return null;
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải nhập số", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải nhập số", "", JOptionPane.ERROR_MESSAGE);
         }
         Date ngaybd = dateNgayBatDau.getDate();
         if (ngaybd == null) {
-            JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được để trống", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ngày bắt đầu không được để trống", "", JOptionPane.ERROR_MESSAGE);
             dateNgayBatDau.requestFocus();
             return null;
         }
 
         Date ngaykt = dateNgayKetThuc.getDate();
         if (ngaykt == null) {
-            JOptionPane.showMessageDialog(this, "Ngày kết thúc không được để trống", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc không được để trống", "", JOptionPane.ERROR_MESSAGE);
             dateNgayKetThuc.requestFocus();
             return null;
         }
@@ -444,7 +444,7 @@ public class View_Voucher extends javax.swing.JPanel {
         ngaybdStr = sdf.format(ngaybd);
         ngayktStr = sdf.format(ngaykt);
         if (ngaybd.after(ngaykt)) {
-            JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu", "", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu", "", JOptionPane.ERROR_MESSAGE);
             dateNgayKetThuc.requestFocus();
             return null;
         }
@@ -464,7 +464,7 @@ public class View_Voucher extends javax.swing.JPanel {
         if(readForm()!=null){
             serVc.Sua(id, this.readForm());
             this.fillTable(serVc.getAll());
-            JOptionPane.showMessageDialog(this, "Sửa thành công");
+            JOptionPane.showMessageDialog(this, "Sửa thành công","",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
@@ -477,7 +477,7 @@ public class View_Voucher extends javax.swing.JPanel {
         int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
         serVc.Xoa(id);
         this.fillTable(serVc.getAll());
-        JOptionPane.showMessageDialog(this, "Xóa thành công");
+        JOptionPane.showMessageDialog(this, "Xóa thành công","",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -495,7 +495,7 @@ public class View_Voucher extends javax.swing.JPanel {
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String tentim = txtTimKiem.getText();
         if(tentim.trim().isEmpty()){
-            JOptionPane.showMessageDialog(this, "vui lòng nhập tên để tìm","",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên để tìm","",JOptionPane.ERROR_MESSAGE);
             txtTimKiem.requestFocus();
             return;
         }
@@ -503,7 +503,7 @@ public class View_Voucher extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Không tìm thấy voucher","",JOptionPane.WARNING_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(this, "Tìm thành công");
+            JOptionPane.showMessageDialog(this, "Tìm thành công","",JOptionPane.INFORMATION_MESSAGE);
             this.fillTable(serVc.timKiem(tentim));
         }
         
