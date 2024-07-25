@@ -39,13 +39,11 @@ public class View_SanPham extends javax.swing.JPanel {
         fillTable(ssp.getAll());
         ArrayList<String> lstdm = ssp.getDanhMuc();
         ArrayList<String> lstncc = ssp.getNhaCungCap();
-        ArrayList<String> lsttsap = ssp.getTenSanPham();
+//        ArrayList<String> lsttsap = ssp.getTenSanPham();
         cbbDanhMuc.removeAllItems();
         cbbTimKiemDanhMuc.removeAllItems();
         cbbNhaCungCapLoc.removeAllItems();
         cbbNhaCungCap.removeAllItems();
-        cbbSanPhamLoc.removeAllItems();
-        cbbTenSanPham.removeAllItems();
 
         this.themtensanpham();
 
@@ -65,11 +63,14 @@ public class View_SanPham extends javax.swing.JPanel {
             cbbNhaCungCap.addItem(nhacungcap);
             cbbNhaCungCapLoc.addItem(nhacungcap);
         }
+        cbbSanPhamLoc.removeAllItems();
+        cbbTenSanPham.removeAllItems();
         String chonloctensp = "Tất cả";
         cbbSanPhamLoc.addItem(chonloctensp);
+        ArrayList<String> lsttsap = ssp.getTenSanPham();
         for (String tensanpham : lsttsap) {
             cbbSanPhamLoc.addItem(tensanpham);
-//            cbbTenSanPham.addItem(tensanpham);
+            cbbTenSanPham.addItem(tensanpham);
         }
 
         fillTableNhaCungCap(sttsp.getAllNhaCungCap());
