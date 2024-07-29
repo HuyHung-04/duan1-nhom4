@@ -4,9 +4,12 @@
  */
 package service;
 
+import java.util.Date;
 import DBConnect.DBConnect;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import model.Model_Voucher;
 
 /**
@@ -25,23 +28,43 @@ public class Service_Voucher {
     }
 
     public ArrayList<Model_Voucher> getAll() {
-        sql = "select ID_Voucher,MaVoucher,TenVoucher,SoLuong,PhanTramGiamGia,NgayBatDau,NgayKetThuc,TrangThai from Voucher";
+        String sql = "SELECT ID_Voucher, MaVoucher, TenVoucher, SoLuong, PhanTramGiamGia, NgayBatDau, NgayKetThuc, TrangThai FROM Voucher";
         ArrayList<Model_Voucher> list = new ArrayList<>();
         try {
-            ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentDate = new Date();
+
             while (rs.next()) {
-                int id, sl;
-                String ma, ten, phantram, ngaybatdau, ngayketthuc;
-                boolean tt;
-                id = rs.getInt(1);
-                ma = rs.getString(2);
-                ten = rs.getString(3);
-                sl = rs.getInt(4);
-                phantram = rs.getString(5);
-                ngaybatdau = rs.getString(6);
-                ngayketthuc = rs.getString(7);
-                tt = rs.getBoolean(8);
+                int id = rs.getInt(1);
+                String ma = rs.getString(2);
+                String ten = rs.getString(3);
+                int sl = rs.getInt(4);
+                String phantram = rs.getString(5);
+                String ngaybatdau = rs.getString(6);
+                String ngayketthuc = rs.getString(7);
+                boolean tt = rs.getBoolean(8);
+
+                Date ngayKetThuc = sdf.parse(ngayketthuc);
+
+                // Tính toán mốc thời gian 00:00 ngày hôm sau ngày kết thúc
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(ngayKetThuc);
+                cal.add(Calendar.DAY_OF_MONTH, 1); // Thêm 1 ngày
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                Date ngayHetHan = cal.getTime();
+
+                if (currentDate.after(ngayHetHan) && tt) {
+                    // Nếu mốc thời gian đã qua và trạng thái chưa hết hạn
+                    tt = false;
+                    // Cập nhật trạng thái trong cơ sở dữ liệu
+                    updateVoucherStatus(id, tt);
+                }
+
                 Model_Voucher vc = new Model_Voucher(id, ma, ten, sl, phantram, ngaybatdau, ngayketthuc, tt);
                 list.add(vc);
             }
@@ -50,6 +73,18 @@ public class Service_Voucher {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void updateVoucherStatus(int id, boolean status) {
+        String updateSql = "UPDATE Voucher SET TrangThai = ? WHERE ID_Voucher = ?";
+        try {
+            PreparedStatement updatePs = con.prepareStatement(updateSql);
+            updatePs.setBoolean(1, status);
+            updatePs.setInt(2, id);
+            updatePs.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public int Them(Model_Voucher vc) {
@@ -128,13 +163,13 @@ public class Service_Voucher {
         }
         return 0;
     }
-    
+
     public ArrayList<Model_Voucher> timKiem(String tenTim) {
         sql = "select ID_Voucher,MaVoucher,TenVoucher,SoLuong,PhanTramGiamGia,NgayBatDau,NgayKetThuc,TrangThai from Voucher where TenVoucher like ?";
         ArrayList<Model_Voucher> list = new ArrayList<>();
         try {
             ps = con.prepareStatement(sql);
-            ps.setObject(1, "%"+ tenTim +"%");
+            ps.setObject(1, "%" + tenTim + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 int id, sl;
@@ -156,6 +191,58 @@ public class Service_Voucher {
             e.printStackTrace();
         }
         return null;
+    }
+    
+     public String getVoucherByTen(String tenVoucher) {
+        sql = "select PhanTramGiamGia from Voucher where TenVoucher = ?";
+        String PhanTramGiamGia = null;
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, tenVoucher);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                PhanTramGiamGia = rs.getString("PhanTramGiamGia");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return PhanTramGiamGia;
+    }
+
+    public ArrayList<String> getTenVoucher() {
+        sql = "select TenVoucher from Voucher where TrangThai = 1";
+        ArrayList<String> lstvc = new ArrayList<>();
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                String ten = rs.getString(1);
+                lstvc.add(ten);
+            }
+            return lstvc;
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+    
+    public int getSoLuongVoucher(String ten){
+        sql = "select SoLuong from Voucher where TenVoucher = ?";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, ten);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                int soLuong = rs.getInt(1);
+                return soLuong;
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            
+        }
+        return 0;
     }
 
 }

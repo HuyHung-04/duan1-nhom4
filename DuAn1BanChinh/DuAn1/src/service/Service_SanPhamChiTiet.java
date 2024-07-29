@@ -8,6 +8,7 @@ import Model.Model_SanPhamChiTiet;
 import DBConnect.DBConnect;
 import java.sql.*;
 import java.util.ArrayList;
+import model.Model_SPCTBanHang;
 
 /**
  *
@@ -151,6 +152,77 @@ public class Service_SanPhamChiTiet {
             e.printStackTrace();
         }
         return true;
+    }
+    
+    public ArrayList<Model_SPCTBanHang> getAllSPBanHang() {
+        ArrayList<Model_SPCTBanHang> list = new ArrayList<>();
+        try {
+            conn = DBConnect.getConnection();
+            StringBuilder sql = new StringBuilder("""
+                  select 
+                  	spct.MaSanPhamChiTiet, spct.TenSanPham, spct.SoLuong, spct.Gia,
+                  	 m.TenMau, s.TenSize, c.TenChatLieu, d.TenDeGiay,
+                  	gg.PhanTramGiamGia
+                  from SanPhamChiTiet spct
+                  left join SanPham sp on spct.ID_SanPhamChiTiet = sp.ID_SanPham
+                  left join Mau M ON spct.ID_Mau = M.ID_Mau
+                  left join Size S on spct.ID_Size = S.ID_Size
+                  left join ChatLieu C  on spct.ID_ChatLieu = c.ID_ChatLieu
+                  left join DeGiay D  on spct.ID_DeGiay = D.ID_DeGiay
+                   left join GiamGia gg on spct.ID_GiamGia = gg.ID_GiamGia
+                    where spct.TrangThai = 1""");
+
+            ps = conn.prepareStatement(sql.toString());
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String ma = rs.getString(1);
+                String ten = rs.getString(2);
+                int soLuong = rs.getInt(3);
+                int gia = rs.getInt(4);
+                String mau = rs.getString(5);
+                String size = rs.getString(6);
+                String chatlieu = rs.getString(7);
+                String degiay = rs.getString(8);
+               double phanTram = rs.getDouble(9);
+
+                list.add(new Model_SPCTBanHang(ma, ten, soLuong, gia, mau, size, chatlieu, degiay, phanTram));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void updateSoLuongSanPhamChiTiet(String maSanPhamChiTiet, int newSoLuong) {
+        String sql = "UPDATE SanPhamChiTiet SET SoLuong = ? WHERE MaSanPhamChiTiet = ?";
+        try {
+            conn = DBConnect.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, newSoLuong);
+            ps.setString(2, maSanPhamChiTiet);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+           
+        }
+    }
+    
+    public int getSoLuongSanPhamChiTiet(String maSanPhamChiTiet){
+        String sql = "select SoLuong from SanPhamChiTiet WHERE MaSanPhamChiTiet = ?";
+        try{
+            conn = DBConnect.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, maSanPhamChiTiet);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                return rs.getInt("SoLuong");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return 0;
     }
     
     

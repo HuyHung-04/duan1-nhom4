@@ -61,7 +61,9 @@ public class View_TrangChu extends javax.swing.JFrame {
         view_HoaDon1 = new view.View_HoaDon();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(1400, 800));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setPreferredSize(new java.awt.Dimension(250, 800));
@@ -218,33 +220,42 @@ public class View_TrangChu extends javax.swing.JFrame {
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(950, 800));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1150, 800));
 
         card.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        card.setPreferredSize(new java.awt.Dimension(1150, 800));
         card.setLayout(new java.awt.CardLayout());
 
-        cardSanPham.setPreferredSize(new java.awt.Dimension(946, 803));
+        cardSanPham.setPreferredSize(new java.awt.Dimension(1130, 800));
+
+        view_SanPham2.setMinimumSize(new java.awt.Dimension(1130, 800));
 
         javax.swing.GroupLayout cardSanPhamLayout = new javax.swing.GroupLayout(cardSanPham);
         cardSanPham.setLayout(cardSanPhamLayout);
         cardSanPhamLayout.setHorizontalGroup(
             cardSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(cardSanPhamLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         cardSanPhamLayout.setVerticalGroup(
             cardSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         card.add(cardSanPham, "cardSanPham");
+
+        cardVoucher.setBackground(new java.awt.Color(255, 255, 255));
+        cardVoucher.setPreferredSize(new java.awt.Dimension(1130, 800));
 
         javax.swing.GroupLayout cardVoucherLayout = new javax.swing.GroupLayout(cardVoucher);
         cardVoucher.setLayout(cardVoucherLayout);
         cardVoucherLayout.setHorizontalGroup(
             cardVoucherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardVoucherLayout.createSequentialGroup()
-                .addComponent(view_Voucher2, javax.swing.GroupLayout.PREFERRED_SIZE, 958, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(view_Voucher2, javax.swing.GroupLayout.PREFERRED_SIZE, 1089, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 61, Short.MAX_VALUE))
         );
         cardVoucherLayout.setVerticalGroup(
             cardVoucherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,19 +266,24 @@ public class View_TrangChu extends javax.swing.JFrame {
 
         card.add(cardVoucher, "cardVoucher");
 
+        cardBanHang.setBackground(new java.awt.Color(255, 255, 255));
+        cardBanHang.setPreferredSize(new java.awt.Dimension(1150, 800));
+
+        view_BanHang1.setMinimumSize(new java.awt.Dimension(1130, 800));
+
         javax.swing.GroupLayout cardBanHangLayout = new javax.swing.GroupLayout(cardBanHang);
         cardBanHang.setLayout(cardBanHangLayout);
         cardBanHangLayout.setHorizontalGroup(
             cardBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardBanHangLayout.createSequentialGroup()
-                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, 954, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 56, Short.MAX_VALUE))
         );
         cardBanHangLayout.setVerticalGroup(
             cardBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardBanHangLayout.createSequentialGroup()
                 .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 22, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         card.add(cardBanHang, "cardBanHang");
@@ -278,7 +294,7 @@ public class View_TrangChu extends javax.swing.JFrame {
             cardKhuyenMaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardKhuyenMaiLayout.createSequentialGroup()
                 .addComponent(view_KhuyenMai1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 201, Short.MAX_VALUE))
         );
         cardKhuyenMaiLayout.setVerticalGroup(
             cardKhuyenMaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,7 +309,7 @@ public class View_TrangChu extends javax.swing.JFrame {
         cardKhachHang.setLayout(cardKhachHangLayout);
         cardKhachHangLayout.setHorizontalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, 970, Short.MAX_VALUE)
+            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
         );
         cardKhachHangLayout.setVerticalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -307,7 +323,7 @@ public class View_TrangChu extends javax.swing.JFrame {
         cardNhanVienLayout.setHorizontalGroup(
             cardNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardNhanVienLayout.createSequentialGroup()
-                .addComponent(view_NhanVien2, javax.swing.GroupLayout.DEFAULT_SIZE, 964, Short.MAX_VALUE)
+                .addComponent(view_NhanVien2, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
                 .addContainerGap())
         );
         cardNhanVienLayout.setVerticalGroup(
@@ -319,11 +335,15 @@ public class View_TrangChu extends javax.swing.JFrame {
 
         card.add(cardNhanVien, "cardNhanVien");
 
+        cardHoaDon.setPreferredSize(new java.awt.Dimension(1150, 800));
+
+        view_HoaDon1.setMinimumSize(new java.awt.Dimension(1130, 800));
+
         javax.swing.GroupLayout cardHoaDonLayout = new javax.swing.GroupLayout(cardHoaDon);
         cardHoaDon.setLayout(cardHoaDonLayout);
         cardHoaDonLayout.setHorizontalGroup(
             cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, 961, Short.MAX_VALUE)
+            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         cardHoaDonLayout.setVerticalGroup(
             cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,11 +356,11 @@ public class View_TrangChu extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(card, javax.swing.GroupLayout.DEFAULT_SIZE, 956, Short.MAX_VALUE)
+            .addComponent(card, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(card, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(card, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -350,7 +370,7 @@ public class View_TrangChu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 956, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

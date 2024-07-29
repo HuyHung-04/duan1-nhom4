@@ -226,12 +226,12 @@ public class View_Login extends javax.swing.JFrame {
         String ChucVu = timChucVu(TenDangNhap, MatKhau);
         if (isValidate()) {
             if (ChucVu != null) {
-                if (ChucVu.equals("Quan ly")) {
+                if (ChucVu.equals("Quản lý")) {
                     View_TrangChu view_BanHang = new View_TrangChu();
                     JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Quản Lý");
                     view_BanHang.setVisible(true);
                     this.dispose();
-                } else if (ChucVu.equals("Nhan vien")) {
+                } else if (ChucVu.equals("Nhân viên")) {
                     JOptionPane.showMessageDialog(this, "Bạn đăng nhập với vai trò Nhân viên");
                 }
 
