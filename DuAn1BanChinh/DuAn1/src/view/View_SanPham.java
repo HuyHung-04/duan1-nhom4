@@ -1433,7 +1433,7 @@ public class View_SanPham extends javax.swing.JPanel {
             ArrayList<String> lsttsap = ssp.getTenSanPham();
             for (String tensanpham : lsttsap) {
                 cbbSanPhamLoc.addItem(tensanpham);
-//                cbbTenSanPham.addItem(tensanpham);
+                cbbTenSanPham.addItem(tensanpham);
             }
             if (success) {
                 JOptionPane.showMessageDialog(this, "Sửa thành công!", "", JOptionPane.INFORMATION_MESSAGE);
@@ -1623,6 +1623,12 @@ public class View_SanPham extends javax.swing.JPanel {
         }
         if (rdoSize.isSelected()) {
             if (readFormThuocTinh() != null) {
+                try {
+                    Double.parseDouble(txtTenThuocTinh.getText());
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Size phải là số!", "", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 if (sttsp.ckeckMaSize(txtMaThuocTinh.getText()) != null) {
                     JOptionPane.showMessageDialog(this, "Mã này đã tồn tại!", "", JOptionPane.WARNING_MESSAGE);
                 } else if (sttsp.ckeckTenSize(txtTenThuocTinh.getText()) != null) {
@@ -1747,6 +1753,12 @@ public class View_SanPham extends javax.swing.JPanel {
         if (rdoSize.isSelected()) {
             if (i == -1) {
                 JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa!", "", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            try {
+                Double.parseDouble(txtTenThuocTinh.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Size phải là số!", "", JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (readFormThuocTinh() != null) {

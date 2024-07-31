@@ -5,13 +5,14 @@
 package view;
 
 import java.awt.CardLayout;
+import service.Service_SanPhamChiTiet;
 
 /**
  *
  * @author ADMIN
  */
 public class View_TrangChu extends javax.swing.JFrame {
-
+private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
     CardLayout cardLayout;
 
     /**
@@ -318,6 +319,11 @@ public class View_TrangChu extends javax.swing.JFrame {
 
         card.add(cardKhachHang, "cardKhachHang");
 
+        cardNhanVien.setBackground(new java.awt.Color(255, 255, 255));
+        cardNhanVien.setPreferredSize(new java.awt.Dimension(1150, 800));
+
+        view_NhanVien2.setPreferredSize(new java.awt.Dimension(1150, 800));
+
         javax.swing.GroupLayout cardNhanVienLayout = new javax.swing.GroupLayout(cardNhanVien);
         cardNhanVien.setLayout(cardNhanVienLayout);
         cardNhanVienLayout.setHorizontalGroup(
@@ -384,14 +390,18 @@ public class View_TrangChu extends javax.swing.JFrame {
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
         cardLayout.show(card, "cardSanPham");
+        view_SanPham2.fillTableSanPhamCHiTiet();
     }//GEN-LAST:event_btnSanPhamActionPerformed
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
         cardLayout.show(card, "cardBanHang");
+        view_BanHang1.fillTableSanPhamCHiTiet(serSpct.getAllSPBanHang());
+        view_BanHang1.fillcbbNhanVien();
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
         cardLayout.show(card, "cardHoaDon");
+        view_HoaDon1.fillTable();
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed

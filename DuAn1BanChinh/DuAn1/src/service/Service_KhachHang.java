@@ -39,7 +39,7 @@ public class Service_KhachHang {
     }
 
     public ArrayList<String> getTenKhachHang() {
-        sql = "select TenKhachHang from KhachHang";
+        sql = "select TenKhachHang from KhachHang where TrangThai = 1";
         ArrayList<String> lstkh = new ArrayList<>();
         try {
             ps = c.prepareStatement(sql);

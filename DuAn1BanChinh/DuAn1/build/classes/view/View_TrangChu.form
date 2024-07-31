@@ -516,6 +516,14 @@
               </SubComponents>
             </Container>
             <Container class="javax.swing.JPanel" name="cardNhanVien">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[1150, 800]"/>
+                </Property>
+              </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="cardNhanVien"/>
@@ -542,6 +550,11 @@
               </Layout>
               <SubComponents>
                 <Component class="view.View_NhanVien" name="view_NhanVien2">
+                  <Properties>
+                    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                      <Dimension value="[1150, 800]"/>
+                    </Property>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

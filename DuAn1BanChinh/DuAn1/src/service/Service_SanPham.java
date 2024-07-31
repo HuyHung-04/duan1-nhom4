@@ -105,7 +105,7 @@ public class Service_SanPham {
             if (rs.next()) {
                 return rs.getInt(idColumn);
             } else {
-                JOptionPane.showMessageDialog(null, "Không tìm thấy " + nameColumn + " với tên: " + name);
+//                JOptionPane.showMessageDialog(null, "Không tìm thấy " + nameColumn + " với tên: " + name);
                 return -1;
             }
         } catch (SQLException e) {

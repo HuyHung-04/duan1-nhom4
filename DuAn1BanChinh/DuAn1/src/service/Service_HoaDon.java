@@ -62,7 +62,7 @@ public class Service_HoaDon {
             if (rs.next()) {
                 return rs.getInt(idColumn);
             } else {
-                JOptionPane.showMessageDialog(null, "Không tìm thấy " + nameColumn + " với tên: " + name);
+//                JOptionPane.showMessageDialog(null, "Không tìm thấy " + nameColumn + " với tên: " + name);
                 return -1;
             }
         } catch (SQLException e) {
@@ -222,6 +222,25 @@ public class Service_HoaDon {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    
+    public int deleteHoaDonCho(String maHoaDon){
+        int idHoaDon = getIdFromName("HoaDon", "MaHoaDon", "ID_HoaDon", maHoaDon);
+        
+        sql = "exec DeleteHoaDonBanHang ?";
+        if (idHoaDon == -1) {
+            return 0; 
+        }
+
+        try{
+            ps =c.prepareStatement(sql);
+            ps.setInt(1, idHoaDon);
+            ps.executeUpdate();
+            return 1;
+        }catch(Exception e){
+            e.printStackTrace();
+            return 0;
         }
     }
 

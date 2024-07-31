@@ -224,7 +224,40 @@ public class Service_SanPhamChiTiet {
         }
         return 0;
     }
-    
+    public double getGiaSanPhamChiTiet(String maSanPhamChiTiet) {
+        String sql = "select Gia from SanPhamChiTiet WHERE MaSanPhamChiTiet = ?";
+        try {
+            conn = DBConnect.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, maSanPhamChiTiet);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble("Gia");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+    }
+
+    public double getPhanTramGiamGia(String maSanPhamChiTiet) {
+        String sql = "select gg.PhanTramGiamGia from SanPhamChiTiet spct\n"
+                + "join GiamGia gg on gg.ID_GiamGia = spct.ID_GiamGia\n"
+                + "where MaSanPhamChiTiet = ?";
+        try {
+            conn = DBConnect.getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, maSanPhamChiTiet);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble("PhanTramGiamGia");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
     
     
 }
