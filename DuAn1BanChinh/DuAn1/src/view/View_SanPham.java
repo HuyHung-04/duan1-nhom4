@@ -1443,7 +1443,24 @@ public class View_SanPham extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiTietSanPhamActionPerformed
-        TabbedPaneSanPham.setSelectedIndex(1);
+        int i = tblSanPham.getSelectedRow();
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sản phẩm", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String tenSP = tblSanPham.getValueAt(i, 1).toString();
+        cbbSanPhamLoc.setSelectedItem(tenSP);
+        cbbTenSanPham.setSelectedItem(tenSP);
+        if (tblSanPhamChiTiet.getRowCount() > 0) {
+            tblSanPhamChiTiet.setRowSelectionInterval(0, 0);
+            this.showData(tblSanPhamChiTiet.getSelectedRow());
+            txtspct.setEnabled(false);
+            TabbedPaneSanPham.setSelectedIndex(1);
+        } else {
+            JOptionPane.showMessageDialog(this, "Không có sản phẩm chi tiết", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
     }//GEN-LAST:event_btnChiTietSanPhamActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
