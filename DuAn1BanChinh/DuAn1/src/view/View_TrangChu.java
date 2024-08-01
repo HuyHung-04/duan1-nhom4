@@ -306,15 +306,17 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
 
         card.add(cardKhuyenMai, "cardKhuyenMai");
 
+        cardKhachHang.setPreferredSize(new java.awt.Dimension(1150, 800));
+
         javax.swing.GroupLayout cardKhachHangLayout = new javax.swing.GroupLayout(cardKhachHang);
         cardKhachHang.setLayout(cardKhachHangLayout);
         cardKhachHangLayout.setHorizontalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, 1150, Short.MAX_VALUE)
+            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         cardKhachHangLayout.setVerticalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+            .addComponent(view_KhachHang2, javax.swing.GroupLayout.PREFERRED_SIZE, 816, Short.MAX_VALUE)
         );
 
         card.add(cardKhachHang, "cardKhachHang");
@@ -397,6 +399,7 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         cardLayout.show(card, "cardBanHang");
         view_BanHang1.fillTableSanPhamCHiTiet(serSpct.getAllSPBanHang());
         view_BanHang1.fillcbbNhanVien();
+        view_BanHang1.fillcbbKhachHang();
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed

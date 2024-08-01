@@ -10,6 +10,7 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.UUID;
 import model.Model_Voucher;
 
 /**
@@ -192,8 +193,8 @@ public class Service_Voucher {
         }
         return null;
     }
-    
-     public String getVoucherByTen(String tenVoucher) {
+
+    public String getVoucherByTen(String tenVoucher) {
         sql = "select PhanTramGiamGia from Voucher where TenVoucher = ?";
         String PhanTramGiamGia = null;
         try {
@@ -226,23 +227,59 @@ public class Service_Voucher {
         }
         return null;
     }
-    
-    public int getSoLuongVoucher(String ten){
+    // hùng làm update số lượng
+    public int getSoLuongVoucher(String ten) {
         sql = "select SoLuong from Voucher where TenVoucher = ?";
-        try{
+        try {
             ps = con.prepareStatement(sql);
             ps.setString(1, ten);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 int soLuong = rs.getInt(1);
                 return soLuong;
             }
-            
-        }catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
         return 0;
     }
+    
+     public void updateVoucherSoLuong(String tenVoucher, int newSoLuong) {
+        String sql = "UPDATE Voucher SET SoLuong = ? WHERE TenVoucher = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, newSoLuong);
+            ps.setString(2, tenVoucher);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+     
+    public ArrayList<String> phucHoiSoLuongVch(String maHoaDon) {
+    ArrayList<String> phucHoi = new ArrayList<>();
+    String sql = """
+                 SELECT vc.MaVoucher 
+                 FROM HoaDon hd
+                 INNER JOIN Voucher vc ON vc.ID_Voucher = hd.ID_Voucher 
+                 WHERE hd.MaHoaDon = ?
+                 """;
+    try {
+        ps = con.prepareStatement(sql);
+        ps.setObject(1, UUID.fromString(maHoaDon));
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            String maVoucher = rs.getString("MaVoucher");
+            phucHoi.add(maVoucher);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return phucHoi;
+}
+
+
 
 }
