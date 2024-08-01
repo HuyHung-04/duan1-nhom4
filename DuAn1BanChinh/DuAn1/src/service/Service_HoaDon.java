@@ -147,7 +147,7 @@ public class Service_HoaDon {
               LEFT JOIN NhanVien nv ON hd.ID_NhanVien = nv.ID_NhanVien
               LEFT JOIN KhachHang kh ON hd.ID_KhachHang = kh.ID_KhachHang
               LEFT JOIN Voucher v ON hd.ID_Voucher = v.ID_Voucher
-              WHERE 1 = 1""");
+              WHERE 1 = 1 AND hd.TrangThai = 1""");
         if (id != null) {
             sql.append(" AND hd.ID_HoaDon LIKE '%").append(id).append("%'");
         }
