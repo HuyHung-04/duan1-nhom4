@@ -11,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import model.Model_SanPham;
 import model.Model_ThuocTinhSanPham;
 import service.Service_SanPham;
-import Model.Model_SanPhamChiTiet;
+import model.Model_SanPhamChiTiet;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -191,19 +191,13 @@ public class View_SanPham extends javax.swing.JPanel {
     }
 
     public void fillTableSanPhamCHiTiet() {
-//        DefaultTableModel dblModel = (DefaultTableModel) tblSanPhamChiTiet.getModel();
-//        dblModel.setRowCount(0);
-//
-//        for (Model_SanPhamChiTiet x : qLy.getAll(cbbSizeLoc.getSelectedIndex(), cbbMauLoc.getSelectedIndex(), cbbChatLieuLoc.getSelectedIndex(), cbbSanPhamLoc.getSelectedIndex())) {
-//            dblModel.addRow(x.toDataRow());
-//        }
         DefaultTableModel dblModel = (DefaultTableModel) tblSanPhamChiTiet.getModel();
         dblModel.setRowCount(0);
-        list.clear(); // Clear the existing list
+        list.clear();
 
         for (Model_SanPhamChiTiet x : qLy.getAll(cbbSizeLoc.getSelectedIndex(), cbbMauLoc.getSelectedIndex(), cbbChatLieuLoc.getSelectedIndex(), cbbSanPhamLoc.getSelectedIndex())) {
             dblModel.addRow(x.toDataRow());
-            list.add(x); // Populate the list
+            list.add(x);
         }
     }
 

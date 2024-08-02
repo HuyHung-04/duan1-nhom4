@@ -4,7 +4,7 @@
  */
 package view;
 
-import Model.Model_SanPhamChiTiet;
+import model.Model_SanPhamChiTiet;
 import java.util.ArrayList;
 import java.util.UUID;
 import javax.swing.JOptionPane;

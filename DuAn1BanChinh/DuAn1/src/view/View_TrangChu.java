@@ -289,6 +289,8 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
 
         card.add(cardBanHang, "cardBanHang");
 
+        cardKhuyenMai.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout cardKhuyenMaiLayout = new javax.swing.GroupLayout(cardKhuyenMai);
         cardKhuyenMai.setLayout(cardKhuyenMaiLayout);
         cardKhuyenMaiLayout.setHorizontalGroup(
@@ -412,7 +414,7 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
     }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     private void btnVoucherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoucherActionPerformed
-        cardLayout.show(card, "cardVoucher");
+        cardLayout.show(card, "cardVoucher");       
     }//GEN-LAST:event_btnVoucherActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed

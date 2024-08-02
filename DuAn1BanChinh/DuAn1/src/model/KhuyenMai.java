@@ -9,23 +9,28 @@ package model;
  * @author Admin
  */
 public class KhuyenMai {
+    private int id;
     private String MaKhuyenMai;
-    private String TenKhuyenMai;
     private String ptGiamGia;
     private String ngayBD;
     private String ngayKT;
     private boolean trangThai;
 
-    public KhuyenMai(String ma, String phantram, String ngaybd, String ngaykt, boolean trangthai) {
-    }
-
-    public KhuyenMai(String MaKhuyenMai, String TenKhuyenMai, String ptGiamGia, String ngayBD, String ngayKT, boolean trangThai) {
+    public KhuyenMai(int id, String MaKhuyenMai, String ptGiamGia, String ngayBD, String ngayKT, boolean trangThai) {
+        this.id = id;
         this.MaKhuyenMai = MaKhuyenMai;
-        this.TenKhuyenMai = TenKhuyenMai;
         this.ptGiamGia = ptGiamGia;
         this.ngayBD = ngayBD;
         this.ngayKT = ngayKT;
         this.trangThai = trangThai;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getMaKhuyenMai() {
@@ -34,14 +39,6 @@ public class KhuyenMai {
 
     public void setMaKhuyenMai(String MaKhuyenMai) {
         this.MaKhuyenMai = MaKhuyenMai;
-    }
-
-    public String getTenKhuyenMai() {
-        return TenKhuyenMai;
-    }
-
-    public void setTenKhuyenMai(String TenKhuyenMai) {
-        this.TenKhuyenMai = TenKhuyenMai;
     }
 
     public String getPtGiamGia() {
@@ -78,7 +75,7 @@ public class KhuyenMai {
 
     public Object[] toDataRow() {
         return new Object[]{
-            getMaKhuyenMai(),getTenKhuyenMai(),getPtGiamGia(),getNgayBD(),getNgayKT(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động"};
+            getMaKhuyenMai(),getPtGiamGia(),getNgayBD(),getNgayKT(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động"};
     }
     
 }

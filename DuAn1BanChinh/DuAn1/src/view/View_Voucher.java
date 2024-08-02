@@ -31,7 +31,7 @@ public class View_Voucher extends javax.swing.JPanel {
         this.fillTable(serVc.getAll());
     }
 
-    void fillTable(ArrayList<Model_Voucher> list) {
+  public void fillTable(ArrayList<Model_Voucher> list) {
         dtm = (DefaultTableModel) tblVoucher.getModel();
         dtm.setRowCount(0);
         for (Model_Voucher vc : list) {

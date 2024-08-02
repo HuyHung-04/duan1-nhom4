@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package model;
 
 /**
  *
@@ -20,8 +20,16 @@ public class Model_SanPhamChiTiet {
     private String deGiay;
     private boolean trangThai;
     private String TenSanPham;
+    private int idGiamGia;
 
     public Model_SanPhamChiTiet() {
+    }
+    
+    public Model_SanPhamChiTiet(int id, String MaSanPhamChiTiet, String TenSanPhamChiTiet, int idGiamGia) {
+        this.id = id;
+        this.MaSanPhamChiTiet = MaSanPhamChiTiet;
+        this.TenSanPhamChiTiet = TenSanPhamChiTiet;
+        this.idGiamGia = idGiamGia;
     }
 
     public Model_SanPhamChiTiet(int id, String MaSanPhamChiTiet, String TenSanPhamChiTiet, int soLuong, int gia, String mau, String size, String chatLieu, String deGiay, boolean trangThai, String TenSanPham) {
@@ -125,10 +133,22 @@ public class Model_SanPhamChiTiet {
         this.TenSanPham = MaSanPhamChiTiet;
     }
 
+    public int getIdGiamGia() {
+        return idGiamGia;
+    }
+
+    public void setIdGiamGia(int idGiamGia) {
+        this.idGiamGia = idGiamGia;
+    }
+
     public Object[] toDataRow() {
         return new Object[]{
             getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getSoLuong(), getGia(),
              getMau(), getSize(), getChatLieu(), getDeGiay(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động",getTenSanPham()};
     }
-
+    
+    public Object[] toDataRowKhuyenMai() {
+        
+        return new Object[]{getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getIdGiamGia() != 0 ? "Đã chọn":"Chưa chọn"};
+    }
 }

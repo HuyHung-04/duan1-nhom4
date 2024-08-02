@@ -7,8 +7,8 @@
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_Voucher.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_KhuyenMai.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_SanPham.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_SanPhamChiTiet.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_KhachHang.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_SanPhamChiTiet.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_Voucher.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_HoaDon.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_TrangChu.java</file>
@@ -22,6 +22,7 @@
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_NhanVien.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_ThuocTinhSanPham.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_NhanVien.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/KhuyenMai.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_KhuyenMai.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_NhanVien.java</file>
         </group>
