@@ -173,9 +173,6 @@ public class Service_HoaDon {
         }
     }
 
-
-
-
     public ArrayList<Model_HoaDon02> getIdHoaDon() {
         ArrayList<Model_HoaDon02> list = new ArrayList<>();
         String sql = """
@@ -224,24 +221,135 @@ public class Service_HoaDon {
             return null;
         }
     }
-    
-    public int deleteHoaDonCho(String maHoaDon){
+
+    public int deleteHoaDonCho(String maHoaDon) {
         int idHoaDon = getIdFromName("HoaDon", "MaHoaDon", "ID_HoaDon", maHoaDon);
-        
+
         sql = "exec DeleteHoaDonBanHang ?";
         if (idHoaDon == -1) {
-            return 0; 
+            return 0;
         }
 
-        try{
-            ps =c.prepareStatement(sql);
+        try {
+            ps = c.prepareStatement(sql);
             ps.setInt(1, idHoaDon);
             ps.executeUpdate();
             return 1;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
 
+    public int checkVoucher(String maHoaDon) {
+        sql = "select ID_Voucher from HoaDon where MaHoaDon = ?";
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setString(1, maHoaDon);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return 0;
+    }
+
+    public void addVoucher(String maHoaDon, String tenVoucher) {
+        int idHoaDon = getIdFromName("HoaDon", "MaHoaDon", "ID_HoaDon", maHoaDon);
+        int idVoucher = getIdFromName("Voucher", "TenVoucher", "ID_Voucher", tenVoucher);
+        sql = "update HoaDon\n"
+                + "set ID_Voucher  = ?\n"
+                + "where ID_HoaDon = ?";
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, idVoucher);
+            ps.setInt(2, idHoaDon);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getTongTienByHoaDon(String maHoaDon) {
+        int idHoaDon = getIdFromName("HoaDon", "MaHoaDon", "ID_HoaDon", maHoaDon);
+        sql = "select TongTien from HoaDon where ID_HoaDon=?";
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, idHoaDon);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getVoucherByIDHoaDon(String maHoaDon) {
+        int idVoucher = getIdFromName("HoaDon", "MaHoaDon", "ID_Voucher", maHoaDon);
+        sql = "select PhanTramGiamGia from Voucher where ID_Voucher = ?";
+
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, idVoucher);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getTenVoucherByIDHoaDon(String maHoaDon) {
+        int idVoucher = getIdFromName("HoaDon", "MaHoaDon", "ID_Voucher", maHoaDon);
+        sql = "select TenVoucher from Voucher where ID_Voucher = ?";
+
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, idVoucher);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getSoLuongVoucherByIDHoaDon(String maHoaDon) {
+        int idVoucher = getIdFromName("HoaDon", "MaHoaDon", "ID_Voucher", maHoaDon);
+        sql = "select SoLuong from Voucher where ID_Voucher = ?";
+
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, idVoucher);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void updateVoucherSoLuongByMaHoaDon(String maHoaDon, int newSoLuong) {
+        int idVoucher = getIdFromName("HoaDon", "MaHoaDon", "ID_Voucher", maHoaDon);
+        String sql = "UPDATE Voucher SET SoLuong = ? WHERE ID_Voucher = ?";
+        try {
+            ps = c.prepareStatement(sql);
+            ps.setInt(1, newSoLuong);
+            ps.setInt(2, idVoucher);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -323,11 +323,11 @@ Model_KhachHang readForm(){
         return null;
     }
     dc = txtDiaChi.getText();
-//    if(sdt.trim().isEmpty()){
-//        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
-//        txtDiaChi.requestFocus();
-//        return null;
-//    }
+    if(sdt.trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
+        txtDiaChi.requestFocus();
+        return null;
+    }
     String trangThai = (String) cbbTrangThai.getSelectedItem();
         if (trangThai != null && trangThai.equals("Dừng hoạt động")) {
             tt = false;
@@ -360,10 +360,10 @@ Model_KhachHang readForm(){
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
-        String sdt = txtTimSdt.getText();
+        String sdt = txtSDT.getText();
         if(sdt.trim().isEmpty()){
             JOptionPane.showMessageDialog(this, "Bạn chưa nhập thông tin tìm","",JOptionPane.ERROR_MESSAGE);
-            txtTimSdt.requestFocus();
+            txtSDT.requestFocus();
             return;
         }
         if(serKh.timKiem(sdt).isEmpty()){

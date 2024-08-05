@@ -227,30 +227,6 @@ public class Service_Voucher {
         }
         return null;
     }
-    
-    public Model_Voucher getById(int id) {
-    String sql = "SELECT ID_Voucher, MaVoucher, TenVoucher, SoLuong, PhanTramGiamGia, NgayBatDau, NgayKetThuc, TrangThai FROM Voucher WHERE ID_Voucher = ?";
-    try {
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            int idVoucher = rs.getInt(1);
-            String ma = rs.getString(2);
-            String ten = rs.getString(3);
-            int sl = rs.getInt(4);
-            String phantram = rs.getString(5);
-            String ngaybatdau = rs.getString(6);
-            String ngayketthuc = rs.getString(7);
-            boolean tt = rs.getBoolean(8);
-
-            return new Model_Voucher(idVoucher, ma, ten, sl, phantram, ngaybatdau, ngayketthuc, tt);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return null;
-}
     // hùng làm update số lượng
     public int getSoLuongVoucher(String ten) {
         sql = "select SoLuong from Voucher where TenVoucher = ?";
@@ -282,28 +258,6 @@ public class Service_Voucher {
         }
     }
      
-    public ArrayList<String> phucHoiSoLuongVch(String maHoaDon) {
-    ArrayList<String> phucHoi = new ArrayList<>();
-    String sql = """
-                 SELECT vc.MaVoucher 
-                 FROM HoaDon hd
-                 INNER JOIN Voucher vc ON vc.ID_Voucher = hd.ID_Voucher 
-                 WHERE hd.MaHoaDon = ?
-                 """;
-    try {
-        ps = con.prepareStatement(sql);
-        ps.setObject(1, UUID.fromString(maHoaDon));
-        rs = ps.executeQuery();
-        while (rs.next()) {
-            String maVoucher = rs.getString("MaVoucher");
-            phucHoi.add(maVoucher);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return phucHoi;
-}
-
 
 
 }

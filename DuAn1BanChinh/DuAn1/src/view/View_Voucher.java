@@ -31,7 +31,7 @@ public class View_Voucher extends javax.swing.JPanel {
         this.fillTable(serVc.getAll());
     }
 
-    public void fillTable(ArrayList<Model_Voucher> list) {
+    void fillTable(ArrayList<Model_Voucher> list) {
         dtm = (DefaultTableModel) tblVoucher.getModel();
         dtm.setRowCount(0);
         for (Model_Voucher vc : list) {
@@ -366,18 +366,19 @@ public class View_Voucher extends javax.swing.JPanel {
     }//GEN-LAST:event_tblVoucherMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        if (readForm() != null) {
-            if (serVc.checkMa(txtMa.getText()) != null) {
-                JOptionPane.showMessageDialog(this, "Mã trùng", "", JOptionPane.WARNING_MESSAGE);
-            } else {
+        if(readForm()!=null){
+            if(serVc.checkMa(txtMa.getText())!=null){
+                JOptionPane.showMessageDialog(this, "Mã trùng","",JOptionPane.WARNING_MESSAGE);
+            }
+            else{
                 serVc.Them(this.readForm());
                 this.fillTable(serVc.getAll());
-                JOptionPane.showMessageDialog(this, "Thêm thành công", "", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Thêm thành công","",JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnThemActionPerformed
     Model_Voucher readForm() {
-        String ma, ten, phantram, ngaybdStr, ngayktStr;
+        String ma, ten, phantram, ngaybdStr,ngayktStr;
         int sl;
         boolean tt = true;
         ma = txtMa.getText();
@@ -394,22 +395,22 @@ public class View_Voucher extends javax.swing.JPanel {
         }
         String slStr = txtSoLuong.getText();
         if (slStr.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Số lượng không được để trống", "", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Số lượng không được để trống", "", JOptionPane.ERROR_MESSAGE);
+        txtSoLuong.requestFocus();
+        return null;
+    }
+    try {
+        sl = Integer.valueOf(slStr);
+        if (sl <= 0) {
+            JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
             txtSoLuong.requestFocus();
             return null;
         }
-        try {
-            sl = Integer.valueOf(slStr);
-            if (sl <= 0) {
-                JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
-                txtSoLuong.requestFocus();
-                return null;
-            }
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Số lượng phải là số", "", JOptionPane.ERROR_MESSAGE);
-            txtSoLuong.requestFocus();
-            return null;
-        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Số lượng phải là số", "", JOptionPane.ERROR_MESSAGE);
+        txtSoLuong.requestFocus();
+        return null;
+    }
         phantram = txtPhanTram.getText();
         if (phantram.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Phần trăm không được để trống", "", JOptionPane.ERROR_MESSAGE);
@@ -454,51 +455,16 @@ public class View_Voucher extends javax.swing.JPanel {
         return new Model_Voucher(ma, ten, sl, phantram, ngaybdStr, ngayktStr, tt);
     }
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-//        i = tblVoucher.getSelectedRow();
-//        if (i == -1) {
-//            JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa", "", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
-//        Model_Voucher selectedVoucher = serVc.getById(id);
-//        if (selectedVoucher != null && !selectedVoucher.isTrangThai()) {
-//            JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì voucher đã quá hạn", "", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (readForm() != null) {
-//            serVc.Sua(id, this.readForm());
-//            this.fillTable(serVc.getAll());
-//            JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-//        }
         i = tblVoucher.getSelectedRow();
-        if (i == -1) {
-            JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa", "", JOptionPane.WARNING_MESSAGE);
+        if(i==-1){
+            JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa","",JOptionPane.WARNING_MESSAGE);
             return;
         }
         int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
-        Model_Voucher selectedVoucher = serVc.getById(id);
-        Model_Voucher updatedVoucher = readForm();
-
-        if (selectedVoucher != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            try {
-                Date currentDate = new Date();
-                Date newEndDate = sdf.parse(updatedVoucher.getNgayKetThuc());
-
-                if (!selectedVoucher.isTrangThai() && newEndDate.before(currentDate)) {
-                    JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì voucher đã quá hạn", "", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (updatedVoucher != null) {
-                    serVc.Sua(id, updatedVoucher);
-                    this.fillTable(serVc.getAll());
-                    JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Lỗi trong quá trình xử lý ngày tháng", "", JOptionPane.ERROR_MESSAGE);
-            }
+        if(readForm()!=null){
+            serVc.Sua(id, this.readForm());
+            this.fillTable(serVc.getAll());
+            JOptionPane.showMessageDialog(this, "Sửa thành công","",JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnSuaActionPerformed
 
@@ -511,7 +477,7 @@ public class View_Voucher extends javax.swing.JPanel {
         int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
         serVc.Xoa(id);
         this.fillTable(serVc.getAll());
-        JOptionPane.showMessageDialog(this, "Xóa thành công", "", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Xóa thành công","",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
@@ -528,18 +494,19 @@ public class View_Voucher extends javax.swing.JPanel {
 
     private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
         String tentim = txtTimKiem.getText();
-        if (tentim.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên để tìm", "", JOptionPane.ERROR_MESSAGE);
+        if(tentim.trim().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên để tìm","",JOptionPane.ERROR_MESSAGE);
             txtTimKiem.requestFocus();
             return;
         }
-        if (serVc.timKiem(tentim).isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Không tìm thấy voucher", "", JOptionPane.WARNING_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, "Tìm thành công", "", JOptionPane.INFORMATION_MESSAGE);
+        if(serVc.timKiem(tentim).isEmpty()){
+            JOptionPane.showMessageDialog(this, "Không tìm thấy voucher","",JOptionPane.WARNING_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Tìm thành công","",JOptionPane.INFORMATION_MESSAGE);
             this.fillTable(serVc.timKiem(tentim));
         }
-
+        
     }//GEN-LAST:event_btnTimKiemActionPerformed
 
 
