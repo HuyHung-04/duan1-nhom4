@@ -4,7 +4,7 @@
  */
 package service;
 
-import model.Model_SanPhamChiTiet;
+import Model.Model_SanPhamChiTiet;
 import DBConnect.DBConnect;
 import java.sql.*;
 import java.util.ArrayList;

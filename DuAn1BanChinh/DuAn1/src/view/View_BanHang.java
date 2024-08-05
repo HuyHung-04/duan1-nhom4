@@ -4,7 +4,7 @@
  */
 package view;
 
-import model.Model_SanPhamChiTiet;
+import Model.Model_SanPhamChiTiet;
 import java.util.ArrayList;
 import java.util.UUID;
 import javax.swing.JOptionPane;
@@ -39,11 +39,9 @@ public class View_BanHang extends javax.swing.JPanel {
         fillTableHoaDon(hdsvr.getAllBanHang());
         fillcbbNhanVien();
         fillcbbKhachHang();
-        fillcbbVoucher();
-    }
-    
-    public void fillcbbVoucher(){
+        String voucher = "Không thêm voucher";
         cbbVoucher.removeAllItems();
+        cbbVoucher.addItem(voucher);
         ArrayList<String> lstvc = vcsvr.getTenVoucher();
         for (String vc : lstvc) {
             cbbVoucher.addItem(vc);
@@ -57,8 +55,8 @@ public class View_BanHang extends javax.swing.JPanel {
             cbbTenNhanVien.addItem(nv);
         }
     }
-    
-    public void fillcbbKhachHang(){
+
+    public void fillcbbKhachHang() {
         cbbTenKhachHang.removeAllItems();
         ArrayList<String> lstkh = skh.getTenKhachHang();
         for (String kh : lstkh) {
@@ -815,11 +813,23 @@ public class View_BanHang extends javax.swing.JPanel {
 
     private void tblHoaDonChoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonChoMouseClicked
         int i = tblHoaDonCho.getSelectedRow();
+        String maHoaDon = tblHoaDonCho.getValueAt(i, 0).toString();
         lblMaHoaDon.setText(tblHoaDonCho.getValueAt(i, 0).toString());
         cbbTenKhachHang.setSelectedItem(tblHoaDonCho.getValueAt(i, 3).toString());
         cbbTenNhanVien.setSelectedItem(tblHoaDonCho.getValueAt(i, 2).toString());
-        txtTongTien.setText(String.valueOf(tongTien()));
-        txtThanhTien.setText(tblHoaDonCho.getValueAt(i, 4).toString());
+        if (hdsvr.getVoucherByIDHoaDon(maHoaDon) == null) {
+            txtTongTien.setText(String.valueOf(tongTien()));
+            txtThanhTien.setText(tblHoaDonCho.getValueAt(i, 4).toString());
+            cbbVoucher.setSelectedIndex(0);
+        } else {
+            String phanTramGiamStr = hdsvr.getVoucherByIDHoaDon(maHoaDon);
+            double phanTramGiam = Double.valueOf(phanTramGiamStr);
+            String tongTienStr = hdsvr.getTongTienByHoaDon(maHoaDon);
+            double tongTien = Double.valueOf(tongTienStr);
+            txtTongTien.setText(tongTienStr);
+            txtThanhTien.setText(String.valueOf(soTienGiamAfterAddVoucher(tongTien, phanTramGiam)));
+            cbbVoucher.setSelectedItem(hdsvr.getTenVoucherByIDHoaDon(maHoaDon));
+        }
         fillTableGioHang(shdct.getHDCTFromHD(tblHoaDonCho.getValueAt(i, 0).toString()));
     }//GEN-LAST:event_tblHoaDonChoMouseClicked
 
@@ -984,16 +994,20 @@ public class View_BanHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Hết voucher", "Thông Báo", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        String tenVoucher = cbbVoucher.getSelectedItem().toString();
-        String phanTramGiamStr = vcsvr.getVoucherByTen(tenVoucher);
-        double phanTramGiam = Double.valueOf(phanTramGiamStr);
-        String tongTienStr = tblHoaDonCho.getValueAt(i, 4).toString();
-        double tongTien = Double.valueOf(tongTienStr);
-
-        txtThanhTien.setText(String.valueOf(soTienGiamAfterAddVoucher(tongTien, phanTramGiam)));
-        // hùng làm tru so luong
-        vcsvr.updateVoucherSoLuong(selectedVoucher, soLuongVoucher - 1);
-
+        String maHoaDon = tblHoaDonCho.getValueAt(i, 0).toString();
+        if (hdsvr.checkVoucher(maHoaDon) != 0) {
+            JOptionPane.showMessageDialog(this, "Hóa đơn đã áp dụng voucher","Lỗi",JOptionPane.ERROR_MESSAGE);
+            return;
+        } else {
+            String tenVoucher = cbbVoucher.getSelectedItem().toString();
+            hdsvr.addVoucher(maHoaDon, tenVoucher);
+            String phanTramGiamStr = vcsvr.getVoucherByTen(tenVoucher);
+            double phanTramGiam = Double.valueOf(phanTramGiamStr);
+            String tongTienStr = hdsvr.getTongTienByHoaDon(maHoaDon);
+            double tongTien = Double.valueOf(tongTienStr);
+            txtThanhTien.setText(String.valueOf(soTienGiamAfterAddVoucher(tongTien, phanTramGiam)));
+            vcsvr.updateVoucherSoLuong(selectedVoucher, soLuongVoucher - 1);
+        }
     }//GEN-LAST:event_btnAddVocherActionPerformed
 
     private void txtThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThanhTienActionPerformed
@@ -1011,11 +1025,16 @@ public class View_BanHang extends javax.swing.JPanel {
             return;
         }
         String maHoaDon = tblHoaDonCho.getValueAt(i, 0).toString();
+        if (hdsvr.checkVoucher(maHoaDon) != 0) {
+            String getSoLuongVoucherStr = hdsvr.getSoLuongVoucherByIDHoaDon(maHoaDon);
+            int getSoLuongVoucherMoi = Integer.parseInt(getSoLuongVoucherStr);
+            System.out.println("ádasdadadasdasd");
+            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi+1);
+        }
 
         ArrayList<Model_HoaDonChiTiet> lstHDCT = shdct.getHDCTFromHD(maHoaDon);
         hdsvr.deleteHoaDonCho(maHoaDon);
         for (Model_HoaDonChiTiet mhdct : lstHDCT) {
-
             String maSanPhamChiTiet = mhdct.getMa();
             int soLuongCu = mhdct.getSoLuong();
             int SoLuongHienTai = sspct.getSoLuongSanPhamChiTiet(maSanPhamChiTiet);
@@ -1023,17 +1042,12 @@ public class View_BanHang extends javax.swing.JPanel {
             int soLuongMoi = soLuongCu + SoLuongHienTai;
             sspct.updateSoLuongSanPhamChiTiet(maSanPhamChiTiet, soLuongMoi);
         }
-        // hùng làm
-        ArrayList<String> appliedVouchers = vcsvr.phucHoiSoLuongVch(maHoaDon);
-        for (String voucher : appliedVouchers) {
-            int currentQuantity = vcsvr.getSoLuongVoucher(voucher);
-            vcsvr.updateVoucherSoLuong(voucher, currentQuantity + 1);
-        }
-        ////
+        
         fillTableGioHang(shdct.getHDCTFromHD(maHoaDon));
         fillTableSanPhamCHiTiet(sspct.getAllSPBanHang());
         txtTongTien.setText("0.0");
         txtThanhTien.setText("0.0");
+        cbbVoucher.setSelectedIndex(0);
         fillTableHoaDon(hdsvr.getAllBanHang());
         JOptionPane.showMessageDialog(this, "Đã xoá hóa đơn chờ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnHuyDonHangActionPerformed
