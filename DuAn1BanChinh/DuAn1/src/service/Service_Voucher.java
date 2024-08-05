@@ -227,6 +227,31 @@ public class Service_Voucher {
         }
         return null;
     }
+
+    public Model_Voucher getById(int id) {
+        String sql = "SELECT ID_Voucher, MaVoucher, TenVoucher, SoLuong, PhanTramGiamGia, NgayBatDau, NgayKetThuc, TrangThai FROM Voucher WHERE ID_Voucher = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int idVoucher = rs.getInt(1);
+                String ma = rs.getString(2);
+                String ten = rs.getString(3);
+                int sl = rs.getInt(4);
+                String phantram = rs.getString(5);
+                String ngaybatdau = rs.getString(6);
+                String ngayketthuc = rs.getString(7);
+                boolean tt = rs.getBoolean(8);
+
+                return new Model_Voucher(idVoucher, ma, ten, sl, phantram, ngaybatdau, ngayketthuc, tt);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // hùng làm update số lượng
     public int getSoLuongVoucher(String ten) {
         sql = "select SoLuong from Voucher where TenVoucher = ?";
@@ -245,8 +270,8 @@ public class Service_Voucher {
         }
         return 0;
     }
-    
-     public void updateVoucherSoLuong(String tenVoucher, int newSoLuong) {
+
+    public void updateVoucherSoLuong(String tenVoucher, int newSoLuong) {
         String sql = "UPDATE Voucher SET SoLuong = ? WHERE TenVoucher = ?";
         try {
             ps = con.prepareStatement(sql);
@@ -257,7 +282,5 @@ public class Service_Voucher {
             e.printStackTrace();
         }
     }
-     
-
 
 }

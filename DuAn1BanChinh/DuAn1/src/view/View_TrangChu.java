@@ -6,6 +6,7 @@ package view;
 
 import java.awt.CardLayout;
 import service.Service_SanPhamChiTiet;
+import service.Service_Voucher;
 
 /**
  *
@@ -13,6 +14,7 @@ import service.Service_SanPhamChiTiet;
  */
 public class View_TrangChu extends javax.swing.JFrame {
 private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
+private service.Service_Voucher servc = new Service_Voucher();
     CardLayout cardLayout;
 
     /**
@@ -47,17 +49,17 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         jPanel2 = new javax.swing.JPanel();
         card = new javax.swing.JPanel();
         cardSanPham = new javax.swing.JPanel();
-        view_SanPham1 = new view.View_SanPham();
+        view_SanPham2 = new view.View_SanPham();
         cardVoucher = new javax.swing.JPanel();
-        view_Voucher1 = new view.View_Voucher();
+        view_Voucher2 = new view.View_Voucher();
         cardBanHang = new javax.swing.JPanel();
         view_BanHang1 = new view.View_BanHang();
         cardKhuyenMai = new javax.swing.JPanel();
         view_KhuyenMai1 = new view.View_KhuyenMai();
         cardKhachHang = new javax.swing.JPanel();
-        view_KhachHang1 = new view.View_KhachHang();
+        view_KhachHang2 = new view.View_KhachHang();
         cardNhanVien = new javax.swing.JPanel();
-        view_NhanVien1 = new view.View_NhanVien();
+        view_NhanVien2 = new view.View_NhanVien();
         cardHoaDon = new javax.swing.JPanel();
         view_HoaDon1 = new view.View_HoaDon();
 
@@ -229,21 +231,20 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
 
         cardSanPham.setPreferredSize(new java.awt.Dimension(1130, 800));
 
+        view_SanPham2.setMinimumSize(new java.awt.Dimension(1130, 800));
+
         javax.swing.GroupLayout cardSanPhamLayout = new javax.swing.GroupLayout(cardSanPham);
         cardSanPham.setLayout(cardSanPhamLayout);
         cardSanPhamLayout.setHorizontalGroup(
             cardSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardSanPhamLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(view_SanPham1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         cardSanPhamLayout.setVerticalGroup(
             cardSanPhamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardSanPhamLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(view_SanPham1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
+            .addComponent(view_SanPham2, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         card.add(cardSanPham, "cardSanPham");
@@ -255,13 +256,15 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         cardVoucher.setLayout(cardVoucherLayout);
         cardVoucherLayout.setHorizontalGroup(
             cardVoucherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_Voucher1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(cardVoucherLayout.createSequentialGroup()
+                .addComponent(view_Voucher2, javax.swing.GroupLayout.PREFERRED_SIZE, 1089, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 61, Short.MAX_VALUE))
         );
         cardVoucherLayout.setVerticalGroup(
             cardVoucherLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardVoucherLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(view_Voucher1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(view_Voucher2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         card.add(cardVoucher, "cardVoucher");
@@ -269,22 +272,26 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         cardBanHang.setBackground(new java.awt.Color(255, 255, 255));
         cardBanHang.setPreferredSize(new java.awt.Dimension(1150, 800));
 
+        view_BanHang1.setMinimumSize(new java.awt.Dimension(1130, 800));
+
         javax.swing.GroupLayout cardBanHangLayout = new javax.swing.GroupLayout(cardBanHang);
         cardBanHang.setLayout(cardBanHangLayout);
         cardBanHangLayout.setHorizontalGroup(
             cardBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardBanHangLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, 1094, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 56, Short.MAX_VALUE))
         );
         cardBanHangLayout.setVerticalGroup(
             cardBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardBanHangLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(view_BanHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         card.add(cardBanHang, "cardBanHang");
+
+        cardKhuyenMai.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout cardKhuyenMaiLayout = new javax.swing.GroupLayout(cardKhuyenMai);
         cardKhuyenMai.setLayout(cardKhuyenMaiLayout);
@@ -309,13 +316,11 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         cardKhachHang.setLayout(cardKhachHangLayout);
         cardKhachHangLayout.setHorizontalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_KhachHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(view_KhachHang2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         cardKhachHangLayout.setVerticalGroup(
             cardKhachHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardKhachHangLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(view_KhachHang1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(view_KhachHang2, javax.swing.GroupLayout.PREFERRED_SIZE, 816, Short.MAX_VALUE)
         );
 
         card.add(cardKhachHang, "cardKhachHang");
@@ -323,36 +328,38 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         cardNhanVien.setBackground(new java.awt.Color(255, 255, 255));
         cardNhanVien.setPreferredSize(new java.awt.Dimension(1150, 800));
 
+        view_NhanVien2.setPreferredSize(new java.awt.Dimension(1150, 800));
+
         javax.swing.GroupLayout cardNhanVienLayout = new javax.swing.GroupLayout(cardNhanVien);
         cardNhanVien.setLayout(cardNhanVienLayout);
         cardNhanVienLayout.setHorizontalGroup(
             cardNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardNhanVienLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(view_NhanVien1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(view_NhanVien2, javax.swing.GroupLayout.DEFAULT_SIZE, 1144, Short.MAX_VALUE)
+                .addContainerGap())
         );
         cardNhanVienLayout.setVerticalGroup(
             cardNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cardNhanVienLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(view_NhanVien1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(view_NhanVien2, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         card.add(cardNhanVien, "cardNhanVien");
 
         cardHoaDon.setPreferredSize(new java.awt.Dimension(1150, 800));
 
+        view_HoaDon1.setMinimumSize(new java.awt.Dimension(1130, 800));
+
         javax.swing.GroupLayout cardHoaDonLayout = new javax.swing.GroupLayout(cardHoaDon);
         cardHoaDon.setLayout(cardHoaDonLayout);
         cardHoaDonLayout.setHorizontalGroup(
             cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(view_HoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         cardHoaDonLayout.setVerticalGroup(
             cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(cardHoaDonLayout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(view_HoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
         );
 
         card.add(cardHoaDon, "cardHoaDon");
@@ -389,7 +396,7 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
 
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
         cardLayout.show(card, "cardSanPham");
-        view_SanPham1.fillTableSanPhamCHiTiet();
+        view_SanPham2.fillTableSanPhamCHiTiet();
     }//GEN-LAST:event_btnSanPhamActionPerformed
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
@@ -397,6 +404,7 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
         view_BanHang1.fillTableSanPhamCHiTiet(serSpct.getAllSPBanHang());
         view_BanHang1.fillcbbNhanVien();
         view_BanHang1.fillcbbKhachHang();
+        view_BanHang1.fillcbbVoucher();
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
@@ -410,6 +418,7 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
 
     private void btnVoucherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoucherActionPerformed
         cardLayout.show(card, "cardVoucher");
+        view_Voucher2.fillTable(servc.getAll());
     }//GEN-LAST:event_btnVoucherActionPerformed
 
     private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
@@ -552,10 +561,10 @@ private service.Service_SanPhamChiTiet serSpct = new Service_SanPhamChiTiet();
     private javax.swing.JPanel jPanel2;
     private view.View_BanHang view_BanHang1;
     private view.View_HoaDon view_HoaDon1;
-    private view.View_KhachHang view_KhachHang1;
+    private view.View_KhachHang view_KhachHang2;
     private view.View_KhuyenMai view_KhuyenMai1;
-    private view.View_NhanVien view_NhanVien1;
-    private view.View_SanPham view_SanPham1;
-    private view.View_Voucher view_Voucher1;
+    private view.View_NhanVien view_NhanVien2;
+    private view.View_SanPham view_SanPham2;
+    private view.View_Voucher view_Voucher2;
     // End of variables declaration//GEN-END:variables
 }
