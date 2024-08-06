@@ -1033,7 +1033,11 @@ public class View_BanHang extends javax.swing.JPanel {
             String getSoLuongVoucherStr = hdsvr.getSoLuongVoucherByIDHoaDon(maHoaDon);
             int getSoLuongVoucherMoi = Integer.parseInt(getSoLuongVoucherStr);
 <<<<<<< HEAD
+<<<<<<< HEAD
             hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi+1);
+=======
+            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi + 1);
+>>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
 =======
             hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi + 1);
 >>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe

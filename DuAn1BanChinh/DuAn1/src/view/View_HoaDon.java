@@ -299,9 +299,15 @@ public class View_HoaDon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     private void txtSearchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchIdActionPerformed
+=======
+    private void cboNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNamActionPerformed
+        this.fillTable();
+    }//GEN-LAST:event_cboNamActionPerformed
+>>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
 =======
     private void cboNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNamActionPerformed
         this.fillTable();
