@@ -140,26 +140,29 @@ public class Service_HoaDon {
     }
 
 //   hoa don
-    public ArrayList<Model_HoaDon02> getAllBanHang(String id, int ngay, int thang) {
+    public ArrayList<Model_HoaDon02> getAllBanHang(String id, int ngay, int thang,String nam,String ten) {
         ArrayList<Model_HoaDon02> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
               SELECT hd.MaHoaDon, hd.TongTien, hd.NgayTao, hd.TrangThai, nv.MaNhanVien, nv.TenNhanVien, kh.MaKhachHang, kh.TenKhachHang FROM HoaDon hd
               LEFT JOIN NhanVien nv ON hd.ID_NhanVien = nv.ID_NhanVien
               LEFT JOIN KhachHang kh ON hd.ID_KhachHang = kh.ID_KhachHang
               LEFT JOIN Voucher v ON hd.ID_Voucher = v.ID_Voucher
-              WHERE 1 = 1 AND hd.TrangThai = 1""");
-        if (id != null) {
-            sql.append(" AND hd.ID_HoaDon LIKE '%").append(id).append("%'");
-        }
+              WHERE hd.TrangThai = 1 and nv.TenNhanVien LIKE ?""");
+//        if (id != null) {
+//            sql.append(" AND hd.ID_HoaDon LIKE '%").append(id).append("%'");
+//        }
         if (ngay != 0) {
             sql.append(" AND DAY(hd.NgayTao) = ").append(ngay);
         }
         if (thang != 0) {
             sql.append(" AND MONTH(hd.NgayTao) = ").append(thang);
         }
+        if (!nam.equals("Chọn năm")) {
+            sql.append(" AND YEAR(hd.NgayTao) = ").append(nam);
+        }
         try {
             ps = c.prepareStatement(sql.toString());
-
+            ps.setString(1, "%" + ten + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 UUID maHoaDon = UUID.fromString(rs.getString(1));
