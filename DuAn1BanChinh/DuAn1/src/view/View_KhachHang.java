@@ -25,13 +25,13 @@ private DefaultTableModel dtm = new DefaultTableModel();
         initComponents();
         fillTable(serKh.getAll());
     }
-void fillTable(ArrayList<Model_KhachHang> list){
-    dtm = (DefaultTableModel) tblKhachHang.getModel();
-    dtm.setRowCount(0);
-    for (Model_KhachHang kh : list) {
-        dtm.addRow(kh.toDaTaRow());
+    void fillTable(ArrayList<Model_KhachHang> list) {
+        dtm = (DefaultTableModel) tblKhachHang.getModel();
+        dtm.setRowCount(0);
+        for (Model_KhachHang kh : list) {
+            dtm.addRow(kh.toDaTaRow());
+        }
     }
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -323,11 +323,11 @@ Model_KhachHang readForm(){
         return null;
     }
     dc = txtDiaChi.getText();
-    if(sdt.trim().isEmpty()){
-        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
-        txtDiaChi.requestFocus();
-        return null;
-    }
+//    if(sdt.trim().isEmpty()){
+//        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
+//        txtDiaChi.requestFocus();
+//        return null;
+//    }
     String trangThai = (String) cbbTrangThai.getSelectedItem();
         if (trangThai != null && trangThai.equals("Dừng hoạt động")) {
             tt = false;
@@ -360,10 +360,10 @@ Model_KhachHang readForm(){
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnTimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimActionPerformed
-        String sdt = txtSDT.getText();
+        String sdt = txtTimSdt.getText();
         if(sdt.trim().isEmpty()){
             JOptionPane.showMessageDialog(this, "Bạn chưa nhập thông tin tìm","",JOptionPane.ERROR_MESSAGE);
-            txtSDT.requestFocus();
+            txtTimSdt.requestFocus();
             return;
         }
         if(serKh.timKiem(sdt).isEmpty()){

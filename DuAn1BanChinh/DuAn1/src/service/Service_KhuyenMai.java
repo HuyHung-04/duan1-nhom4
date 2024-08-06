@@ -5,13 +5,16 @@
 package service;
 
 import DBConnect.DBConnect;
-import Model.Model_SanPhamChiTiet;
+import model.Model_SanPhamChiTiet;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import model.Model_KhuyenMai;
+import java.util.Calendar;
+import model.KhuyenMai;
+import java.util.Date;
 
 /**
  *
@@ -24,8 +27,10 @@ public class Service_KhuyenMai {
     ResultSet rs;
     String sql;
 
-    public ArrayList<Model_KhuyenMai> getAll() {
-        ArrayList<Model_KhuyenMai> list = new ArrayList<>();
+    public ArrayList<KhuyenMai> getAll() {
+        ArrayList<KhuyenMai> list = new ArrayList<>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date();
         try {
             conn = DBConnect.getConnection();
             String sql = """
@@ -42,13 +47,39 @@ public class Service_KhuyenMai {
                 String ngaybd = rs.getString(4);
                 String ngaykt = rs.getString(5);
                 boolean trangthai = rs.getBoolean(6);
-                Model_KhuyenMai km = new Model_KhuyenMai(id, ma, phantram, ngaybd, ngaykt, trangthai);
+                Date ngayKetThuc = sdf.parse(ngaykt);
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(ngayKetThuc);
+                cal.add(Calendar.DAY_OF_MONTH, 1);
+                cal.set(Calendar.HOUR_OF_DAY, 0);
+                cal.set(Calendar.MINUTE, 0);
+                cal.set(Calendar.SECOND, 0);
+                cal.set(Calendar.MILLISECOND, 0);
+                Date ngayHetHan = cal.getTime();
+                if (currentDate.after(ngayHetHan) && trangthai) {
+                    updateKhuyenMaiStatus(id, false);
+                    trangthai = false;
+                }
+                KhuyenMai km = new KhuyenMai(id, ma, phantram, ngaybd, ngaykt, trangthai);
                 list.add(km);
             }
             return list;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+
+    private void updateKhuyenMaiStatus(int id, boolean status) {
+        String updateSql = "UPDATE giamgia SET trangthai = ? WHERE ID_GiamGia = ?";
+        try {
+            PreparedStatement ps = conn.prepareStatement(updateSql);
+            ps.setBoolean(1, status);
+            ps.setInt(2, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -62,7 +93,7 @@ public class Service_KhuyenMai {
                                    """;
 
             ps = conn.prepareStatement(sql);
-            
+
             ps.setInt(1, idGG);
             rs = ps.executeQuery();
 
@@ -76,7 +107,8 @@ public class Service_KhuyenMai {
             return null;
         }
     }
-    public  int themkhuyenmai(Model_KhuyenMai km){
+
+    public int themkhuyenmai(KhuyenMai km) {
         try {
             conn = DBConnect.getConnection();
             sql = """
@@ -84,25 +116,24 @@ public class Service_KhuyenMai {
                         	(MaGiamGia,PhanTramGiamGia,NgayBatDau,NgayKetThuc,TrangThai)
                         values 
                         	(?, ?, ?, ?, ?)""";
-                  
+
             ps = conn.prepareStatement(sql);
-            
-            
-            
+
             ps.setString(1, km.getMaKhuyenMai());
             ps.setString(2, km.getPtGiamGia());
             ps.setString(3, km.getNgayBD());
-            ps.setString(4, km.getNgayKT());            
+            ps.setString(4, km.getNgayKT());
             ps.setBoolean(5, km.isTrangThai());
-            
+
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-    public int sua(Model_KhuyenMai km) {
+
+    public int sua(KhuyenMai km) {
         try {
             conn = DBConnect.getConnection();
             sql = """
@@ -110,69 +141,68 @@ public class Service_KhuyenMai {
                         	set MaGiamGia = ?,PhanTramGiamGia=?,NgayBatDau=?,NgayKetThuc=?,TrangThai=?
                   where id_giamgia =?
                        """;
-                  
+
             ps = conn.prepareStatement(sql);
-            
-            
-            
+
             ps.setString(1, km.getMaKhuyenMai());
             ps.setString(2, km.getPtGiamGia());
             ps.setString(3, km.getNgayBD());
-            ps.setString(4, km.getNgayKT());            
+            ps.setString(4, km.getNgayKT());
             ps.setBoolean(5, km.isTrangThai());
             ps.setInt(6, km.getId());
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-    
+
     public int chonKhuyenMai(int idGiamGia, int idSpct) {
         try {
             conn = DBConnect.getConnection();
             sql = """
                   update SanPhamChiTiet set ID_GiamGia = ? where ID_SanPhamChiTiet = ?
                        """;
-                  
+
             ps = conn.prepareStatement(sql);
-            
+
             ps.setInt(1, idGiamGia);
             ps.setInt(2, idSpct);
-            
+
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
-    
+
     public int boChonKhuyenMai(int idSpct) {
         try {
             conn = DBConnect.getConnection();
             sql = """
                   update SanPhamChiTiet set ID_GiamGia = null where ID_SanPhamChiTiet = ?
                        """;
-                  
+
             ps = conn.prepareStatement(sql);
-            
+
             ps.setInt(1, idSpct);
-            
+
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
     public Model_SanPhamChiTiet getSanPhamChiTietModel(int idGG, int idSpct) {
         try {
-            
+
             for (Model_SanPhamChiTiet x : getSanPhamChiTiet(idGG)) {
                 if (x.getId() == idSpct) {
-                    
+
                     return x;
                 }
             }
@@ -182,8 +212,7 @@ public class Service_KhuyenMai {
         }
         return null;
     }
-    
-    
+
     private int getIdFromName(String tableName, String nameColumn, String idColumn, String name) {
         String sql = "SELECT " + idColumn + " FROM " + tableName + " WHERE " + nameColumn + " = ?";
         try {
@@ -202,17 +231,42 @@ public class Service_KhuyenMai {
             return -1;
         }
     }
-    
-    public void dungKhuyenMai(String maGiamGia){
+
+    public void dungKhuyenMai(String maGiamGia) {
         int idGiamGia = getIdFromName("GiamGia", "MaGiamGia", "ID_GiamGia", maGiamGia);
         sql = "update SanPhamChiTiet set ID_GiamGia = null where ID_GiamGia = ?";
-        try{
+        try {
             conn = DBConnect.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, idGiamGia);
             ps.executeUpdate();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    public KhuyenMai getById(int id) {
+    String sql = "SELECT ID_KhuyenMai, MaKhuyenMai, PhanTramGiamGia, NgayBatDau, NgayKetThuc, TrangThai FROM KhuyenMai WHERE ID_KhuyenMai = ?";
+    try {
+        conn = DBConnect.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int idKhuyenMai = rs.getInt(1);
+            String maKhuyenMai = rs.getString(2);
+            String phanTramGiamGia = rs.getString(3);
+            String ngayBatDau = rs.getString(4);
+            String ngayKetThuc = rs.getString(5);
+            boolean trangThai = rs.getBoolean(6);
+
+            return new KhuyenMai(idKhuyenMai, maKhuyenMai, phanTramGiamGia, ngayBatDau, ngayKetThuc, trangThai);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+
 }

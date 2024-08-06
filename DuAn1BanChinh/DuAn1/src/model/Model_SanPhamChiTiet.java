@@ -2,14 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Model;
+package model;
 
 /**
  *
  * @author Admin
  */
 public class Model_SanPhamChiTiet {
-
     private int id;
     private String MaSanPhamChiTiet;
     private String TenSanPhamChiTiet;
@@ -25,7 +24,7 @@ public class Model_SanPhamChiTiet {
 
     public Model_SanPhamChiTiet() {
     }
-
+    
     public Model_SanPhamChiTiet(int id, String MaSanPhamChiTiet, String TenSanPhamChiTiet, int idGiamGia) {
         this.id = id;
         this.MaSanPhamChiTiet = MaSanPhamChiTiet;
@@ -44,7 +43,7 @@ public class Model_SanPhamChiTiet {
         this.chatLieu = chatLieu;
         this.deGiay = deGiay;
         this.trangThai = trangThai;
-        this.TenSanPham = TenSanPham;
+        this.TenSanPham = TenSanPham; 
     }
 
     public int getId() {
@@ -126,7 +125,6 @@ public class Model_SanPhamChiTiet {
     public void setTrangThai(boolean trangThai) {
         this.trangThai = trangThai;
     }
-
     public String getTenSanPham() {
         return TenSanPham;
     }
@@ -143,15 +141,14 @@ public class Model_SanPhamChiTiet {
         this.idGiamGia = idGiamGia;
     }
 
-    public Object[] toDataRowKhuyenMai() {
-
-        return new Object[]{getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getIdGiamGia() != 0 ? "Đã chọn" : "Chưa chọn"};
-    }
-
     public Object[] toDataRow() {
         return new Object[]{
             getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getSoLuong(), getGia(),
-            getMau(), getSize(), getChatLieu(), getDeGiay(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động", getTenSanPham()};
+             getMau(), getSize(), getChatLieu(), getDeGiay(), isTrangThai() ? "Đang hoạt động" : "Dừng hoạt động",getTenSanPham()};
     }
-
+    
+    public Object[] toDataRowKhuyenMai() {
+        
+        return new Object[]{getMaSanPhamChiTiet(), getTenSanPhamChiTiet(), getIdGiamGia() != 0 ? "Đã chọn":"Chưa chọn"};
+    }
 }
