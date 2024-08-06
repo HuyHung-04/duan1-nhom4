@@ -21,7 +21,7 @@ import service.Service_Voucher;
 import service.Service_SanPhamChiTiet;
 
 public class View_BanHang extends javax.swing.JPanel {
-    View_KhuyenMai km = new View_KhuyenMai();
+
     View_SanPham vsp = new View_SanPham();
     private Service_HoaDonChiTiet shdct = new Service_HoaDonChiTiet();
     private Service_SanPhamChiTiet sspct = new Service_SanPhamChiTiet();
@@ -41,9 +41,8 @@ public class View_BanHang extends javax.swing.JPanel {
         fillcbbKhachHang();
         fillcbbVoucher();
     }
-    
-    
-    public void fillcbbVoucher(){
+
+    public void fillcbbVoucher() {
         String vc1 = "Không thêm voucher";
         cbbVoucher.removeAllItems();
         cbbVoucher.addItem(vc1);
@@ -60,8 +59,8 @@ public class View_BanHang extends javax.swing.JPanel {
             cbbTenNhanVien.addItem(nv);
         }
     }
-    
-    public void fillcbbKhachHang(){
+
+    public void fillcbbKhachHang() {
         cbbTenKhachHang.removeAllItems();
         ArrayList<String> lstkh = skh.getTenKhachHang();
         for (String kh : lstkh) {
@@ -981,9 +980,6 @@ public class View_BanHang extends javax.swing.JPanel {
                 txtMaKhachHang.setText("Không tìm thấy");
             }
         }
-//        else {
-//            txtMaKhachHang.setText("No Selection");
-//        }
 
     }//GEN-LAST:event_cbbTenKhachHangActionPerformed
 
@@ -999,9 +995,9 @@ public class View_BanHang extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Hết voucher", "Thông Báo", JOptionPane.ERROR_MESSAGE);
             return;
         }
-       String maHoaDon = tblHoaDonCho.getValueAt(i, 0).toString();
-       if (hdsvr.checkVoucher(maHoaDon) != 0) {
-            JOptionPane.showMessageDialog(this, "Hóa đơn đã áp dụng voucher","Lỗi",JOptionPane.ERROR_MESSAGE);
+        String maHoaDon = tblHoaDonCho.getValueAt(i, 0).toString();
+        if (hdsvr.checkVoucher(maHoaDon) != 0) {
+            JOptionPane.showMessageDialog(this, "Hóa đơn đã áp dụng voucher", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         } else {
             String tenVoucher = cbbVoucher.getSelectedItem().toString();
@@ -1013,7 +1009,7 @@ public class View_BanHang extends javax.swing.JPanel {
             txtThanhTien.setText(String.valueOf(soTienGiamAfterAddVoucher(tongTien, phanTramGiam)));
             vcsvr.updateVoucherSoLuong(selectedVoucher, soLuongVoucher - 1);
         }
-           
+
     }//GEN-LAST:event_btnAddVocherActionPerformed
 
     private void txtThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThanhTienActionPerformed
@@ -1023,10 +1019,10 @@ public class View_BanHang extends javax.swing.JPanel {
     private void btnHuyDonHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyDonHangActionPerformed
         int i = tblHoaDonCho.getSelectedRow();
         if (i == -1) {
-            JOptionPane.showMessageDialog(this, "Bạn phải chọn Hóa Đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Bạn phải chọn hoá đơn", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có muốn hủy hóa đơn không", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn hủy hóa đơn?", "Xác nhận", JOptionPane.YES_NO_OPTION);
         if (confirm != JOptionPane.YES_OPTION) {
             return;
         }
@@ -1034,7 +1030,7 @@ public class View_BanHang extends javax.swing.JPanel {
         if (hdsvr.checkVoucher(maHoaDon) != 0) {
             String getSoLuongVoucherStr = hdsvr.getSoLuongVoucherByIDHoaDon(maHoaDon);
             int getSoLuongVoucherMoi = Integer.parseInt(getSoLuongVoucherStr);
-            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi+1);
+            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi + 1);
         }
         ArrayList<Model_HoaDonChiTiet> lstHDCT = shdct.getHDCTFromHD(maHoaDon);
         hdsvr.deleteHoaDonCho(maHoaDon);
@@ -1047,13 +1043,13 @@ public class View_BanHang extends javax.swing.JPanel {
             int soLuongMoi = soLuongCu + SoLuongHienTai;
             sspct.updateSoLuongSanPhamChiTiet(maSanPhamChiTiet, soLuongMoi);
         }
-        
+
         fillTableGioHang(shdct.getHDCTFromHD(maHoaDon));
         fillTableSanPhamCHiTiet(sspct.getAllSPBanHang());
         txtTongTien.setText("0.0");
         txtThanhTien.setText("0.0");
         fillTableHoaDon(hdsvr.getAllBanHang());
-        JOptionPane.showMessageDialog(this, "Đã xoá hóa đơn chờ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Huỷ hoá đơn chờ thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnHuyDonHangActionPerformed
 
 

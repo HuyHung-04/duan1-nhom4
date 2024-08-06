@@ -96,11 +96,11 @@ public class View_HoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã hoá đơn", "Tổng tiền", "Ngày tạo", "Trạng thái", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng", "Tên khách hàng"
+                "Mã hoá đơn", "Tổng tiền", "Tên Voucher", "Ngày tạo", "Trạng thái", "Tên nhân viên", "Tên khách hàng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -332,10 +332,8 @@ public class View_HoaDon extends javax.swing.JPanel {
     public void fillTableHoaDonChiTiet() {
         DefaultTableModel tblModel = (DefaultTableModel) tblHoaDonChiTiet.getModel();
         tblModel.setRowCount(0);
-
         int selectedRow = tblHoaDon.getSelectedRow();
         if (selectedRow == -1) {
-            // Không có dòng nào được chọn, hãy thoát khỏi phương thức
             return;
         }
 

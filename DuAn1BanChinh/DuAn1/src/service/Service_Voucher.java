@@ -48,11 +48,9 @@ public class Service_Voucher {
                 boolean tt = rs.getBoolean(8);
 
                 Date ngayKetThuc = sdf.parse(ngayketthuc);
-
-                // Tính toán mốc thời gian 00:00 ngày hôm sau ngày kết thúc
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(ngayKetThuc);
-                cal.add(Calendar.DAY_OF_MONTH, 1); // Thêm 1 ngày
+                cal.add(Calendar.DAY_OF_MONTH, 1);
                 cal.set(Calendar.HOUR_OF_DAY, 0);
                 cal.set(Calendar.MINUTE, 0);
                 cal.set(Calendar.SECOND, 0);
@@ -60,9 +58,7 @@ public class Service_Voucher {
                 Date ngayHetHan = cal.getTime();
 
                 if (currentDate.after(ngayHetHan) && tt) {
-                    // Nếu mốc thời gian đã qua và trạng thái chưa hết hạn
                     tt = false;
-                    // Cập nhật trạng thái trong cơ sở dữ liệu
                     updateVoucherStatus(id, tt);
                 }
 
