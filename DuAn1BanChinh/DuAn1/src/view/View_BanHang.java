@@ -7,7 +7,9 @@ package view;
 import model.Model_SanPhamChiTiet;
 import java.util.ArrayList;
 import java.util.UUID;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import model.Model_HoaDon;
 import model.Model_HoaDonChiTiet;
@@ -22,7 +24,6 @@ import service.Service_SanPhamChiTiet;
 
 public class View_BanHang extends javax.swing.JPanel {
 
-    View_SanPham vsp = new View_SanPham();
     private Service_HoaDonChiTiet shdct = new Service_HoaDonChiTiet();
     private Service_SanPhamChiTiet sspct = new Service_SanPhamChiTiet();
     private Service_HoaDon hdsvr = new Service_HoaDon();
@@ -580,6 +581,11 @@ public class View_BanHang extends javax.swing.JPanel {
                 txtTimKiemActionPerformed(evt);
             }
         });
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Đơn hàng");
@@ -706,7 +712,6 @@ public class View_BanHang extends javax.swing.JPanel {
         txtTongTien.setText(String.valueOf(tongTien()));
         txtThanhTien.setText(String.valueOf(tongTien()));
         hdsvr.updateHoaDonCho(maHoaDon, tongTien());
-        vsp.fillTableSanPhamCHiTiet();
         fillTableHoaDon(hdsvr.getAllBanHang());
         tblHoaDonCho.setRowSelectionInterval(tblHoaDonCho.getRowCount() - 1, tblHoaDonCho.getRowCount() - 1);
     }//GEN-LAST:event_btnThemSanPhamToHoaDonActionPerformed
@@ -789,8 +794,6 @@ public class View_BanHang extends javax.swing.JPanel {
             txtThanhTien.setText(String.valueOf(tongTien()));
             hdsvr.updateHoaDonCho(maHoaDon, tongTien());
             fillTableHoaDon(hdsvr.getAllBanHang());
-            vsp.fillTableSanPhamCHiTiet();
-
             JOptionPane.showMessageDialog(this, "Đã xoá tất cả sản phẩm khỏi giỏ hàng.", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
         }
         if (!sanPhamCo) {
@@ -941,7 +944,6 @@ public class View_BanHang extends javax.swing.JPanel {
                 txtThanhTien.setText("0.0");
                 txtTongTien.setText("0.0");
                 cbbVoucher.setSelectedIndex(0);
-                vsp.fillTableSanPhamCHiTiet();
             } else {
                 JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong hóa đơn", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
@@ -1030,7 +1032,15 @@ public class View_BanHang extends javax.swing.JPanel {
         if (hdsvr.checkVoucher(maHoaDon) != 0) {
             String getSoLuongVoucherStr = hdsvr.getSoLuongVoucherByIDHoaDon(maHoaDon);
             int getSoLuongVoucherMoi = Integer.parseInt(getSoLuongVoucherStr);
+<<<<<<< HEAD
+<<<<<<< HEAD
+            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi+1);
+=======
             hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi + 1);
+>>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
+=======
+            hdsvr.updateVoucherSoLuongByMaHoaDon(maHoaDon, getSoLuongVoucherMoi + 1);
+>>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
         }
         ArrayList<Model_HoaDonChiTiet> lstHDCT = shdct.getHDCTFromHD(maHoaDon);
         hdsvr.deleteHoaDonCho(maHoaDon);
@@ -1051,6 +1061,10 @@ public class View_BanHang extends javax.swing.JPanel {
         fillTableHoaDon(hdsvr.getAllBanHang());
         JOptionPane.showMessageDialog(this, "Huỷ hoá đơn chờ thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnHuyDonHangActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        fillTableSanPhamCHiTiet(sspct.searchSPBanHang(txtTimKiem.getText()));
+    }//GEN-LAST:event_txtTimKiemKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1096,4 +1110,9 @@ public class View_BanHang extends javax.swing.JPanel {
     private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
+//
+//    void setCustomerData(String ma,String tenKh) {
+//        txtMaKhachHang.setText(ma);
+//        cbbTenKhachHang.setSelectedItem(tenKh);
+//    }
 }

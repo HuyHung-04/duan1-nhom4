@@ -259,5 +259,45 @@ public class Service_SanPhamChiTiet {
         return 0;
     }
     
-    
+    public ArrayList<Model_SPCTBanHang> searchSPBanHang(String tenSearch) {
+        ArrayList<Model_SPCTBanHang> list = new ArrayList<>();
+        try {
+            conn = DBConnect.getConnection();
+            StringBuilder sql = new StringBuilder("""
+                                  select 
+                                    spct.MaSanPhamChiTiet, spct.TenSanPham, spct.SoLuong, spct.Gia,
+                                    	 m.TenMau, s.TenSize, c.TenChatLieu, d.TenDeGiay,
+                                    	gg.PhanTramGiamGia
+                                    from SanPhamChiTiet spct
+                                    left join SanPham sp on spct.ID_SanPhamChiTiet = sp.ID_SanPham
+                                    left join Mau M ON spct.ID_Mau = M.ID_Mau
+                                    left join Size S on spct.ID_Size = S.ID_Size
+                                    left join ChatLieu C  on spct.ID_ChatLieu = c.ID_ChatLieu
+                                    left join DeGiay D  on spct.ID_DeGiay = D.ID_DeGiay
+                                     left join GiamGia gg on spct.ID_GiamGia = gg.ID_GiamGia
+                                      where spct.TrangThai = 1 and spct.TenSanPham like ? """);
+
+            ps = conn.prepareStatement(sql.toString());
+            ps.setString(1, "%" + tenSearch + "%");
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String ma = rs.getString(1);
+                String ten = rs.getString(2);
+                int soLuong = rs.getInt(3);
+                int gia = rs.getInt(4);
+                String mau = rs.getString(5);
+                String size = rs.getString(6);
+                String chatlieu = rs.getString(7);
+                String degiay = rs.getString(8);
+               double phanTram = rs.getDouble(9);
+
+                list.add(new Model_SPCTBanHang(ma, ten, soLuong, gia, mau, size, chatlieu, degiay, phanTram));
+            }
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

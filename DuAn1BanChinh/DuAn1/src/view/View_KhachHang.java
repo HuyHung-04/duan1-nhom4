@@ -25,13 +25,13 @@ private DefaultTableModel dtm = new DefaultTableModel();
         initComponents();
         fillTable(serKh.getAll());
     }
-void fillTable(ArrayList<Model_KhachHang> list){
-    dtm = (DefaultTableModel) tblKhachHang.getModel();
-    dtm.setRowCount(0);
-    for (Model_KhachHang kh : list) {
-        dtm.addRow(kh.toDaTaRow());
+    void fillTable(ArrayList<Model_KhachHang> list) {
+        dtm = (DefaultTableModel) tblKhachHang.getModel();
+        dtm.setRowCount(0);
+        for (Model_KhachHang kh : list) {
+            dtm.addRow(kh.toDaTaRow());
+        }
     }
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
