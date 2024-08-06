@@ -65,11 +65,6 @@ public class View_HoaDon extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel4.setText("Tìm kiếm hoá đơn theo tên nhân viên tạo:");
 
-        txtSearchId.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSearchIdActionPerformed(evt);
-            }
-        });
         txtSearchId.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtSearchIdKeyReleased(evt);
@@ -298,16 +293,9 @@ public class View_HoaDon extends javax.swing.JPanel {
         cboNam.setSelectedIndex(0);
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
-
-    private void txtSearchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchIdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSearchIdActionPerformed
-
     private void cboNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNamActionPerformed
         this.fillTable();
     }//GEN-LAST:event_cboNamActionPerformed
-                                
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

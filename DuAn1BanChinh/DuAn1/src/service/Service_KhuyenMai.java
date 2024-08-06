@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import model.KhuyenMai;
 import java.util.Date;
-import model.Model_KhuyenMai;
 
 /**
  *
@@ -89,7 +88,7 @@ public class Service_KhuyenMai {
             conn = DBConnect.getConnection();
             String sql = """
                          select ID_SanPhamChiTiet, MaSanPhamChiTiet, TenSanPham, ID_GiamGia from SanPhamChiTiet
-                         WHERE ID_GiamGia = ? OR ID_GiamGia IS NULL
+                         WHERE TrangThai = 1 AND ID_GiamGia = ? OR ID_GiamGia IS NULL 
                                    """;
 
             ps = conn.prepareStatement(sql);
@@ -267,9 +266,9 @@ public class Service_KhuyenMai {
         }
         return null;
     }
-    
-    public Model_KhuyenMai checkDate(String maCheck) {
-        Model_KhuyenMai mkm = null;
+
+    public KhuyenMai checkDate(String maCheck) {
+        KhuyenMai mkm = null;
         try {
             conn = DBConnect.getConnection();
             String sql = """
@@ -287,7 +286,7 @@ public class Service_KhuyenMai {
                 String ngaybd = rs.getString(4);
                 String ngaykt = rs.getString(5);
                 boolean trangthai = rs.getBoolean(6);
-                Model_KhuyenMai km = new Model_KhuyenMai(id, ma, phantram, ngaybd, ngaykt, trangthai);
+                KhuyenMai km = new KhuyenMai(id, ma, phantram, ngaybd, ngaykt, trangthai);
                 mkm = km;
             }
             return mkm;

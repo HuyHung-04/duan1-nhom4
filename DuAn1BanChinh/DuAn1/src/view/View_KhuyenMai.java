@@ -139,17 +139,12 @@ public class View_KhuyenMai extends javax.swing.JPanel {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         int month = cal.get(Calendar.MONTH);
         int year = cal.get(Calendar.YEAR);
-
-        // Kiểm tra tháng và năm hợp lệ
         if (month < Calendar.JANUARY || month > Calendar.DECEMBER || year < 1900 || year > 2100) {
             return false;
         }
-
         cal.set(Calendar.MONTH, month);
         cal.set(Calendar.YEAR, year);
         int maxDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
-
-        // Kiểm tra ngày có hợp lệ trong tháng hay không
         return day <= maxDay && day > 0;
     }
 
@@ -412,6 +407,11 @@ public class View_KhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_btnLammoiActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int i = tblGiamGia.getSelectedRow();
+        if (i == -1) {
+            JOptionPane.showMessageDialog(this, "Bạn phải chọn một dòng để sửa.", "Lỗi", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         if (checkNull() && checkso() && check()) {
             qlykm.sua(readformSUA());
             this.fillTable();
@@ -420,51 +420,6 @@ public class View_KhuyenMai extends javax.swing.JPanel {
             }
             JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
         }
-//        if (checkNull() && checkso() && check()) {
-//            KhuyenMai km = readformSUA();
-//            if (checkTrangThai(km)) {
-//                JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì khuyến mại đã hết hạn", "", JOptionPane.ERROR_MESSAGE);
-//            } else {
-//                qlykm.sua(km);
-//                this.fillTable();
-//                if (cboTrangthai.getSelectedItem().toString().equals("Hết hạn")) {
-//                    qlykm.dungKhuyenMai(txtMaKM.getText());
-//                }
-//                JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-//            }
-//        }
-
-//int id = Integer.valueOf(tblGiamGia.getValueAt(i, 0).toString());
-//        KhuyenMai selectedVoucher = serVc.getById(id);
-//        if (checkNull() && checkso() && check()) {
-//            KhuyenMai km = readformSUA();
-//            boolean isExpired = checkTrangThai(km);
-//
-//            // Lấy trạng thái mới từ giao diện người dùng
-//            String selectedStatus = cboTrangthai.getSelectedItem().toString();
-//
-//            // Nếu khuyến mãi đã hết hạn
-//            if (isExpired) {
-//                // Kiểm tra nếu trạng thái mới được chọn là "Còn hạn" và khuyến mãi đã hết hạn
-//                if (selectedStatus.equals("Còn hạn")) {
-//                     qlykm.dungKhuyenMai(txtMaKM.getText());
-////                    JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì khuyến mại đã hết hạn", "", JOptionPane.ERROR_MESSAGE);
-////                    return;
-//                } else {
-//                    // Cập nhật trạng thái thành "Hết hạn"
-//                    km.setTrangThai(false);
-//                }
-//            } else {
-//                // Nếu khuyến mãi chưa hết hạn, cập nhật trạng thái theo lựa chọn của người dùng
-//                km.setTrangThai(selectedStatus.equals("Còn hạn"));
-//            }
-//
-//            // Cập nhật khuyến mãi trong cơ sở dữ liệu
-//            qlykm.sua(km);
-//            this.fillTable();
-//            JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-//        }
-
     }//GEN-LAST:event_btnSuaActionPerformed
     private boolean checkTrangThai(KhuyenMai km) {
         try {
@@ -487,6 +442,25 @@ public class View_KhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnGiamGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiamGiaActionPerformed
+//        int indexGg = tblGiamGia.getSelectedRow();
+//        int indexSp = tblSpKm.getSelectedRow();
+//
+//        if (indexSp != -1) {
+//            if (btnGiamGia.getText().equals("Chọn")) {
+//
+//                qlykm.chonKhuyenMai(qlykm.getAll().get(indexGg).getId(), qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
+//                btnGiamGia.setText("Bỏ chọn");
+//            } else if (btnGiamGia.getText().equals("Bỏ chọn")) {
+//
+//                qlykm.boChonKhuyenMai(qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
+//                btnGiamGia.setText("Chọn");
+//            }
+//
+//            this.fillTable();
+//            tblGiamGia.setRowSelectionInterval(indexGg, indexGg);
+//            fillTableSanPhamKM();
+//            tblSpKm.setRowSelectionInterval(indexSp, indexSp);
+//        }
         int indexGg = tblGiamGia.getSelectedRow();
         int indexSp = tblSpKm.getSelectedRow();
 

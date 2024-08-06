@@ -61,6 +61,7 @@ private service.Service_Voucher servc = new Service_Voucher();
         cardNhanVien = new javax.swing.JPanel();
         view_NhanVien2 = new view.View_NhanVien();
         cardHoaDon = new javax.swing.JPanel();
+        view_HoaDon1 = new view.View_HoaDon();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -347,6 +348,20 @@ private service.Service_Voucher servc = new Service_Voucher();
         card.add(cardNhanVien, "cardNhanVien");
 
         cardHoaDon.setPreferredSize(new java.awt.Dimension(1150, 800));
+
+        view_HoaDon1.setMinimumSize(new java.awt.Dimension(1130, 800));
+
+        javax.swing.GroupLayout cardHoaDonLayout = new javax.swing.GroupLayout(cardHoaDon);
+        cardHoaDon.setLayout(cardHoaDonLayout);
+        cardHoaDonLayout.setHorizontalGroup(
+            cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        cardHoaDonLayout.setVerticalGroup(
+            cardHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(view_HoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+        );
+
         card.add(cardHoaDon, "cardHoaDon");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -450,12 +465,74 @@ private service.Service_Voucher servc = new Service_Voucher();
             java.util.logging.Logger.getLogger(View_TrangChu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new View_TrangChu().setVisible(true);
-                
             }
         });
     }
@@ -483,6 +560,7 @@ private service.Service_Voucher servc = new Service_Voucher();
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private view.View_BanHang view_BanHang1;
+    private view.View_HoaDon view_HoaDon1;
     private view.View_KhachHang view_KhachHang2;
     private view.View_KhuyenMai view_KhuyenMai1;
     private view.View_NhanVien view_NhanVien2;

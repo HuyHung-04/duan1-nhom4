@@ -45,7 +45,7 @@ public class Service_SanPham {
             return null;
         }
     }
-    
+
     public ArrayList<String> getNameSP() {
         ArrayList<String> lstsp = new ArrayList<>();
         sql = "Select TenSanPham from sanpham";
@@ -105,7 +105,7 @@ public class Service_SanPham {
             if (rs.next()) {
                 return rs.getInt(idColumn);
             } else {
-                JOptionPane.showMessageDialog(null, "Bạn chưa chọn danh mục","",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Bạn chưa chọn danh mục", "", JOptionPane.WARNING_MESSAGE);
                 return -1;
             }
         } catch (SQLException e) {
@@ -141,17 +141,43 @@ public class Service_SanPham {
         }
     }
 
+//    public boolean updateSanPham(String maSanPham, String tenSanPham, String tenDanhMucSanPham, String tenNhaCungCap, boolean trangThai) {
+//        int idDanhMucSanPham = getIdFromName("DanhMucSanPham", "TenDanhMuc", "ID_DanhMuc", tenDanhMucSanPham);
+//        int idNhaCungCap = getIdFromName("NhaCungCap", "TenNhaCungCap", "ID_NhaCungCap", tenNhaCungCap);
+//
+//        if (idDanhMucSanPham == -1 || idNhaCungCap == -1) {
+//            return false;
+//        }
+//
+//        sql = "UPDATE SanPham SET TenSanPham = ?, ID_DanhMucSanPham = ?, ID_NhaCungCap = ?, TrangThai = ? WHERE MaSanPham = ?";
+//
+//        try {
+//            ps = c.prepareStatement(sql);
+//            ps.setString(1, tenSanPham);
+//            ps.setInt(2, idDanhMucSanPham);
+//            ps.setInt(3, idNhaCungCap);
+//            ps.setBoolean(4, trangThai);
+//            ps.setString(5, maSanPham);
+//
+//            int rowsAffected = ps.executeUpdate();
+//            return rowsAffected > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
     public boolean updateSanPham(String maSanPham, String tenSanPham, String tenDanhMucSanPham, String tenNhaCungCap, boolean trangThai) {
         int idDanhMucSanPham = getIdFromName("DanhMucSanPham", "TenDanhMuc", "ID_DanhMuc", tenDanhMucSanPham);
         int idNhaCungCap = getIdFromName("NhaCungCap", "TenNhaCungCap", "ID_NhaCungCap", tenNhaCungCap);
 
         if (idDanhMucSanPham == -1 || idNhaCungCap == -1) {
-            return false;  // Không tìm thấy ID danh mục hoặc nhà cung cấp
+            return false;
         }
 
         sql = "UPDATE SanPham SET TenSanPham = ?, ID_DanhMucSanPham = ?, ID_NhaCungCap = ?, TrangThai = ? WHERE MaSanPham = ?";
 
         try {
+            c.setAutoCommit(false);
             ps = c.prepareStatement(sql);
             ps.setString(1, tenSanPham);
             ps.setInt(2, idDanhMucSanPham);
@@ -160,10 +186,43 @@ public class Service_SanPham {
             ps.setString(5, maSanPham);
 
             int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected > 0) {              
+                sql = "UPDATE SanPhamChiTiet SET TrangThai = ? WHERE ID_SanPham = (SELECT ID_SanPham FROM SanPham WHERE MaSanPham = ?)";
+                ps = c.prepareStatement(sql);
+                ps.setBoolean(1, trangThai);
+                ps.setString(2, maSanPham);
+                ps.executeUpdate();
+            }
+
+            c.commit();
             return rowsAffected > 0;
         } catch (SQLException e) {
+            try {
+                c.rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                c.setAutoCommit(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void updateSanPhamChiTietStatus(String maSanPham, boolean trangThai) {
+        String updateChiTietSql = "UPDATE SanPhamChiTiet SET TrangThai = ? WHERE ID_SanPham = ?";
+        try {
+            ps = c.prepareStatement(updateChiTietSql);
+            ps.setBoolean(1, trangThai);
+            ps.setString(2, maSanPham);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -273,7 +332,7 @@ public class Service_SanPham {
             return null;
         }
     }
-    
+
     public Model_SanPham checkTrungTenSanPham(String tentr) {
 
         sql = "select MaSanPham, TenSanPham, DanhMucSanPham, NhaCungCap, TrangThai from V_SanPham where TenSanPham = ?";

@@ -15,13 +15,13 @@ import model.Model_SPCTBanHang;
  * @author Admin
  */
 public class Service_SanPhamChiTiet {
-    
+
     Connection conn;
     PreparedStatement ps;
     ResultSet rs;
     String sql;
-            
-    public ArrayList<Model_SanPhamChiTiet> getAll(int sizeCbo , int mauCbo,int chatLieuCbo,int sanPhamCbo ) {
+
+    public ArrayList<Model_SanPhamChiTiet> getAll(int sizeCbo, int mauCbo, int chatLieuCbo, int sanPhamCbo) {
         ArrayList<Model_SanPhamChiTiet> list = new ArrayList<>();
         try {
             conn = DBConnect.getConnection();
@@ -37,23 +37,23 @@ public class Service_SanPhamChiTiet {
                   left join ChatLieu C  on spct.ID_ChatLieu = c.ID_ChatLieu
                   left join DeGiay D  on spct.ID_DeGiay = D.ID_DeGiay
                     where 1 = 1""");
-             if (sanPhamCbo != 0) {
+            if (sanPhamCbo != 0) {
                 sql.append(" and spct.id_sanpham = ").append(sanPhamCbo);
             }
             if (mauCbo != 0) {
                 sql.append(" and spct.id_mau = ").append(mauCbo);
             }
             if (sizeCbo != 0) {
-                sql.append( " and spct.id_size = ").append(sizeCbo);
+                sql.append(" and spct.id_size = ").append(sizeCbo);
             }
-            if (chatLieuCbo !=0 ){
+            if (chatLieuCbo != 0) {
                 sql.append(" and spct.id_chatlieu =").append(chatLieuCbo);
             }
-            
+
             ps = conn.prepareStatement(sql.toString());
             rs = ps.executeQuery();
-            
-            while (rs.next()) {      
+
+            while (rs.next()) {
                 int id = rs.getInt(11);
                 String ma = rs.getString(1);
                 String ten = rs.getString(2);
@@ -61,11 +61,11 @@ public class Service_SanPhamChiTiet {
                 int gia = rs.getInt(4);
                 String mau = rs.getString(5);
                 String size = rs.getString(6);
-                String chatlieu= rs.getString(7);
+                String chatlieu = rs.getString(7);
                 String degiay = rs.getString(8);
                 boolean trangthai = rs.getBoolean(9);
                 String tensanpham = rs.getString(10);
-                Model_SanPhamChiTiet sptc = new Model_SanPhamChiTiet(id, ma, ten, soLuong, gia, mau, size, chatlieu, degiay, trangthai,tensanpham);
+                Model_SanPhamChiTiet sptc = new Model_SanPhamChiTiet(id, ma, ten, soLuong, gia, mau, size, chatlieu, degiay, trangthai, tensanpham);
                 list.add(sptc);
             }
             return list;
@@ -74,6 +74,7 @@ public class Service_SanPhamChiTiet {
             return null;
         }
     }
+
     public int them(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay, int sanPham) {
         try {
             conn = DBConnect.getConnection();
@@ -82,11 +83,9 @@ public class Service_SanPhamChiTiet {
                         	(MaSanPhamChiTiet,TenSanPham,SoLuong,Gia,ID_Mau,ID_Size,ID_ChatLieu,ID_DeGiay,TrangThai,ID_SanPham)
                         values 
                         	(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
-                  
+
             ps = conn.prepareStatement(sql);
-            
-            
-            
+
             ps.setString(1, spct.getMaSanPhamChiTiet());
             ps.setString(2, spct.getTenSanPhamChiTiet());
             ps.setInt(3, spct.getSoLuong());
@@ -94,17 +93,18 @@ public class Service_SanPhamChiTiet {
             ps.setInt(5, mau);
             ps.setInt(6, size);
             ps.setInt(7, chatLieu);
-            ps.setInt(8, deGiay);          
+            ps.setInt(8, deGiay);
             ps.setBoolean(9, spct.isTrangThai());
             ps.setInt(10, sanPham);
-            
+
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
     public int sua(Model_SanPhamChiTiet spct, int mau, int size, int chatLieu, int deGiay, int sanPham) {
         try {
             conn = DBConnect.getConnection();
@@ -113,34 +113,33 @@ public class Service_SanPhamChiTiet {
                         	set TenSanPham = ?,SoLuong=?,Gia=?,ID_Mau=?,ID_Size=?,ID_ChatLieu=?,ID_DeGiay=?,TrangThai=?,ID_SanPham=?
                   where ID_SanPhamChiTiet = ?
                        """;
-                  
+
             ps = conn.prepareStatement(sql);
-            
-            
-            
+
             ps.setString(1, spct.getTenSanPhamChiTiet());
             ps.setInt(2, spct.getSoLuong());
             ps.setInt(3, spct.getGia());
             ps.setInt(4, mau);
             ps.setInt(5, size);
             ps.setInt(6, chatLieu);
-            ps.setInt(7, deGiay);          
+            ps.setInt(7, deGiay);
             ps.setBoolean(8, spct.isTrangThai());
             ps.setInt(9, sanPham);
             ps.setInt(10, spct.getId());
-            
+
             return ps.executeUpdate();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
     public boolean ckeckMaSPCT(String matr) {
         sql = """
                   select *
                   from SanPhamChiTiet 
-                    where MaSanPhamChiTiet = ?"""; 
+                    where MaSanPhamChiTiet = ?""";
         try {
             ps = conn.prepareStatement(sql);
             ps.setObject(1, matr);
@@ -153,7 +152,7 @@ public class Service_SanPhamChiTiet {
         }
         return true;
     }
-    
+
     public ArrayList<Model_SPCTBanHang> getAllSPBanHang() {
         ArrayList<Model_SPCTBanHang> list = new ArrayList<>();
         try {
@@ -184,7 +183,7 @@ public class Service_SanPhamChiTiet {
                 String size = rs.getString(6);
                 String chatlieu = rs.getString(7);
                 String degiay = rs.getString(8);
-               double phanTram = rs.getDouble(9);
+                double phanTram = rs.getDouble(9);
 
                 list.add(new Model_SPCTBanHang(ma, ten, soLuong, gia, mau, size, chatlieu, degiay, phanTram));
             }
@@ -205,25 +204,26 @@ public class Service_SanPhamChiTiet {
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-           
+
         }
     }
-    
-    public int getSoLuongSanPhamChiTiet(String maSanPhamChiTiet){
+
+    public int getSoLuongSanPhamChiTiet(String maSanPhamChiTiet) {
         String sql = "select SoLuong from SanPhamChiTiet WHERE MaSanPhamChiTiet = ?";
-        try{
+        try {
             conn = DBConnect.getConnection();
             ps = conn.prepareStatement(sql);
             ps.setString(1, maSanPhamChiTiet);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 return rs.getInt("SoLuong");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
     }
+
     public double getGiaSanPhamChiTiet(String maSanPhamChiTiet) {
         String sql = "select Gia from SanPhamChiTiet WHERE MaSanPhamChiTiet = ?";
         try {
@@ -258,7 +258,25 @@ public class Service_SanPhamChiTiet {
         }
         return 0;
     }
-    
+
+    public boolean getTrangThaiSanPham(int sanPhamIndex) {
+        String sql = "SELECT TrangThai FROM SanPham WHERE ID_SanPham = ?";
+
+        try {
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, sanPhamIndex);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getBoolean("TrangThai");
+            } else {
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public ArrayList<Model_SPCTBanHang> searchSPBanHang(String tenSearch) {
         ArrayList<Model_SPCTBanHang> list = new ArrayList<>();
         try {
@@ -290,7 +308,7 @@ public class Service_SanPhamChiTiet {
                 String size = rs.getString(6);
                 String chatlieu = rs.getString(7);
                 String degiay = rs.getString(8);
-               double phanTram = rs.getDouble(9);
+                double phanTram = rs.getDouble(9);
 
                 list.add(new Model_SPCTBanHang(ma, ten, soLuong, gia, mau, size, chatlieu, degiay, phanTram));
             }
@@ -300,4 +318,5 @@ public class Service_SanPhamChiTiet {
             return null;
         }
     }
+
 }

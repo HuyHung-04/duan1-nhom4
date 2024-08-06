@@ -169,6 +169,7 @@ public class Service_HoaDon {
                     tenVoucher = "Không áp dụng";
                 }
                 list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), tenVoucher, rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
+//                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), tenVoucher, rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
             }
             return list;
 

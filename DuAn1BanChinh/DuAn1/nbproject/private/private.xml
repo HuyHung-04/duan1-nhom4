@@ -3,41 +3,24 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <file>file:/E:/duan1-nhom4-main/DuAn1BanChinh/DuAn1/src/view/View_TrangChu.java</file>
-            <file>file:/E:/duan1-nhom4-main/DuAn1BanChinh/DuAn1/src/view/View_BanHang.java</file>
-            <file>file:/E:/duan1-nhom4-main/DuAn1BanChinh/DuAn1/src/service/Service_HoaDon.java</file>
-=======
-=======
->>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_Voucher.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_BanHang.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_Voucher.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_KhuyenMai.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_SanPham.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_KhachHang.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_SanPhamChiTiet.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_KhachHang.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_Voucher.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_HoaDon.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_SanPham.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_TrangChu.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_HoaDon02.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_SanPhamChiTiet.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_HoaDon.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_SanPham.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_KhachHang.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_HoaDon.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_KhachHang.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_NhanVien.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_HoaDonChiTiet.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/service/Service_ThuocTinhSanPham.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_NhanVien.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/KhuyenMai.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_KhuyenMai.java</file>
-            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/DBConnect/DBConnect.java</file>
+            <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/model/Model_HoaDonChiTiet02.java</file>
             <file>file:/D:/DuAn1BanChinhNew/DuAn1BanChinhTai/DuAn1BanChinh/DuAn1BanChinh/DuAn1/src/view/View_NhanVien.java</file>
-<<<<<<< HEAD
->>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
-=======
->>>>>>> e1e35326b25a203ef7d431bf7b6285366b8b27fe
         </group>
     </open-files>
 </project-private>
