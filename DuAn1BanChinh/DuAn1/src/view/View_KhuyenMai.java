@@ -492,9 +492,14 @@ public class View_KhuyenMai extends javax.swing.JPanel {
 
         if (indexSp != -1) {
             if (btnGiamGia.getText().equals("Chọn")) {
-
-                qlykm.chonKhuyenMai(qlykm.getAll().get(indexGg).getId(), qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
-                btnGiamGia.setText("Bỏ chọn");
+                String ma = tblGiamGia.getValueAt(indexGg, 0).toString();
+                if (qlykm.checkDate(ma) != null) {
+                    JOptionPane.showMessageDialog(this, "Giảm giá đã hết hạn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else {
+                    qlykm.chonKhuyenMai(qlykm.getAll().get(indexGg).getId(), qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
+                    btnGiamGia.setText("Bỏ chọn");
+                }
             } else if (btnGiamGia.getText().equals("Bỏ chọn")) {
 
                 qlykm.boChonKhuyenMai(qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
