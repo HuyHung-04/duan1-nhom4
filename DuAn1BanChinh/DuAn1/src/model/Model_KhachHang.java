@@ -19,6 +19,13 @@ public class Model_KhachHang {
     public Model_KhachHang() {
     }
 
+    public Model_KhachHang(String maKhachHang, String tenKhachHang, String soDienThoai, String diaChi) {
+        this.maKhachHang = maKhachHang;
+        this.tenKhachHang = tenKhachHang;
+        this.soDienThoai = soDienThoai;
+        this.diaChi = diaChi;
+    }
+
     public Model_KhachHang(String maKhachHang, String tenKhachHang, String soDienThoai, String diaChi, boolean trangThai) {
         this.maKhachHang = maKhachHang;
         this.tenKhachHang = tenKhachHang;
@@ -69,6 +76,10 @@ public class Model_KhachHang {
 
     public Object[] toDaTaRow() {
         return new Object[]{this.maKhachHang, this.tenKhachHang, this.soDienThoai, this.diaChi, this.trangThai ? "Đang hoạt động" : "Dừng hoạt động"
+        };
+    }
+    public Object[] toDataRow2() {
+        return new Object[]{this.maKhachHang, this.tenKhachHang, this.soDienThoai, this.diaChi
         };
     }
 }

@@ -995,7 +995,7 @@ public class View_SanPham extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1393,7 +1393,7 @@ public class View_SanPham extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 781, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         TabbedPaneSanPham.addTab("Thuộc tính sản phẩm", jPanel6);
@@ -1932,24 +1932,24 @@ public class View_SanPham extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Chọn 1 dòng để sửa", "", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if (checkNull()) {
+        if (checkNull() && checkNumber()) {
             Model_SanPhamChiTiet spct = readFormSanPhamChiTiet();
             boolean trangThaiSPCT = spct.isTrangThai();
             int sanPhamIndex = cbbTenSanPham.getSelectedIndex() + 1;
             boolean trangThaiSanPham = qLy.getTrangThaiSanPham(sanPhamIndex);
-            if (!trangThaiSanPham) {
-                if (trangThaiSPCT) {
-                    JOptionPane.showMessageDialog(this, "Không thể sửa bất kỳ thuộc tính nào vì sản phẩm chi tiết đã dừng hoạt động", "", JOptionPane.WARNING_MESSAGE);
-////                    cbbTenSanPham.setEnabled(false);
-//                    disableInputFields();
-                    return;
-                } else {
-                    if (checkNumber()) {
-                        qLy.sua(spct, cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1, sanPhamIndex);
-                        fillTableSanPhamCHiTiet();
-                        JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-                    }
-                }
+
+            if (!trangThaiSanPham && trangThaiSPCT) {
+                JOptionPane.showMessageDialog(this, "Không thể sửa vì sản phẩm chi tiết đã dừng hoạt động", "", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (!trangThaiSanPham && !trangThaiSPCT && spct.isTrangThai()) {
+                JOptionPane.showMessageDialog(this, "Không thể đổi trạng thái sản phẩm chi tiết khi sản phẩm đã dừng hoạt động", "", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (!trangThaiSPCT && spct.isTrangThai()) {
+                JOptionPane.showMessageDialog(this, "Không thể đổi trạng thái sản phẩm chi tiết từ dừng hoạt động sang hoạt động", "", JOptionPane.WARNING_MESSAGE);
+                return;
+            } else if (!trangThaiSPCT) {
+                JOptionPane.showMessageDialog(this, "Không thể sửa bất kỳ thuộc tính nào của sản phẩm chi tiết đã dừng hoạt động", "", JOptionPane.WARNING_MESSAGE);
+                return;
             } else {
                 if (checkNumber()) {
                     qLy.sua(spct, cbbMau.getSelectedIndex() + 1, cbbSize.getSelectedIndex() + 1, cbbChatLieu.getSelectedIndex() + 1, cbbDeGiay.getSelectedIndex() + 1, sanPhamIndex);
@@ -1959,15 +1959,7 @@ public class View_SanPham extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnSuaChiTietSanPhamActionPerformed
-//    private void disableInputFields() {
-//        txtSoLuong.setEnabled(false);
-//        txtGia.setEnabled(false);
-//        cbbMau.setEnabled(false);
-//        cbbSize.setEnabled(false);
-//        cbbChatLieu.setEnabled(false);
-//        cbbDeGiay.setEnabled(false);
-//        cbbTenSanPham.setEnabled(false);
-//    }
+
     private void btnLamMoiChiTietSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiChiTietSanPhamActionPerformed
         this.lamMoi();
         txtspct.setEnabled(true);

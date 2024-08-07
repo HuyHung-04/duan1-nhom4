@@ -42,6 +42,11 @@ public class View_BanHang extends javax.swing.JPanel {
         fillcbbVoucher();
     }
 
+    void setCustomerData(String ma, String tenKh) {
+        txtMaKhachHang.setText(ma);
+        cbbTenKhachHang.setSelectedItem(tenKh);
+    }
+
     public void fillcbbVoucher() {
         String vc1 = "Không thêm voucher";
         cbbVoucher.removeAllItems();
@@ -134,6 +139,7 @@ public class View_BanHang extends javax.swing.JPanel {
         jLabel10 = new javax.swing.JLabel();
         txtMaKhachHang = new javax.swing.JTextField();
         cbbTenKhachHang = new javax.swing.JComboBox<>();
+        btnChonKhachHang = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         lblMaHoaDon = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -256,6 +262,19 @@ public class View_BanHang extends javax.swing.JPanel {
             }
         });
 
+        btnChonKhachHang.setBackground(new java.awt.Color(0, 102, 102));
+        btnChonKhachHang.setFont(btnChonKhachHang.getFont());
+        btnChonKhachHang.setForeground(new java.awt.Color(255, 255, 255));
+        btnChonKhachHang.setText("Chọn");
+        btnChonKhachHang.setMaximumSize(new java.awt.Dimension(90, 23));
+        btnChonKhachHang.setMinimumSize(new java.awt.Dimension(90, 23));
+        btnChonKhachHang.setPreferredSize(new java.awt.Dimension(90, 23));
+        btnChonKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChonKhachHangActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -269,7 +288,9 @@ public class View_BanHang extends javax.swing.JPanel {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cbbTenKhachHang, 0, 133, Short.MAX_VALUE)
                     .addComponent(txtMaKhachHang))
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnChonKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -281,8 +302,9 @@ public class View_BanHang extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cbbTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21))
+                    .addComponent(cbbTenKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChonKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -604,14 +626,15 @@ public class View_BanHang extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(165, 165, 165)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel3))
+                        .addGap(0, 703, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(13, 13, 13)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -948,6 +971,7 @@ public class View_BanHang extends javax.swing.JPanel {
                 txtThanhTien.setText("0.0");
                 txtTongTien.setText("0.0");
                 cbbVoucher.setSelectedIndex(0);
+                lblMaHoaDon.setText("");
                 vsp.fillTableSanPhamCHiTiet();
             } else {
                 JOptionPane.showMessageDialog(this, "Chưa có sản phẩm nào trong hóa đơn", "Thông báo", JOptionPane.ERROR_MESSAGE);
@@ -1063,9 +1087,16 @@ public class View_BanHang extends javax.swing.JPanel {
         fillTableSanPhamCHiTiet(sspct.searchSPBanHang(txtTimKiem.getText()));
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void btnChonKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonKhachHangActionPerformed
+        View_ChonKhachHang chonKhachHang = new View_ChonKhachHang(this);
+        chonKhachHang.setVisible(true);
+        chonKhachHang.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btnChonKhachHangActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddVocher;
+    private javax.swing.JButton btnChonKhachHang;
     private javax.swing.JButton btnHuyDonHang;
     private javax.swing.JButton btnLamMoiBanHang;
     private javax.swing.JButton btnTaoHoaDon;

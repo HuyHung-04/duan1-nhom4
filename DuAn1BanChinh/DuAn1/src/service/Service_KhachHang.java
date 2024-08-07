@@ -160,4 +160,26 @@ public class Service_KhachHang {
         }
         return null;
     }
+    
+    public ArrayList<Model_KhachHang> getKhachHangDangHoatDong(){
+        ArrayList<Model_KhachHang> listkh = new ArrayList<>();
+        sql = "select MaKhachHang,TenKhachHang,SoDienThoai,DiaChi from KhachHang where TrangThai = 1";
+        try {
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {                
+                String ma,ten,sdt,dc;
+                ma = rs.getString(1);
+                ten = rs.getString(2);
+                sdt = rs.getString(3);
+                dc = rs.getString(4);
+                Model_KhachHang model_KhachHang = new Model_KhachHang(ma, ten, sdt, dc);
+                listkh.add(model_KhachHang);
+            }
+            return listkh;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
