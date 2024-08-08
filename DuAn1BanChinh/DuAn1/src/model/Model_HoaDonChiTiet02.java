@@ -14,17 +14,19 @@ public class Model_HoaDonChiTiet02 {
     private String tenSp;
     private int soLuong;
     private int gia;
+    private int giaSaukm;
     private int thanhTien;
 
     public Model_HoaDonChiTiet02() {
     }
 
-    public Model_HoaDonChiTiet02(int id, String maSp, String tenSp, int soLuong, int gia, int thanhTien) {
+    public Model_HoaDonChiTiet02(int id, String maSp, String tenSp, int soLuong, int gia, int giaSaukm, int thanhTien) {
         this.id = id;
         this.maSp = maSp;
         this.tenSp = tenSp;
         this.soLuong = soLuong;
         this.gia = gia;
+        this.giaSaukm = giaSaukm;
         this.thanhTien = thanhTien;
     }
 
@@ -68,6 +70,14 @@ public class Model_HoaDonChiTiet02 {
         this.gia = gia;
     }
 
+    public int getGiaSaukm() {
+        return giaSaukm;
+    }
+
+    public void setGiaSaukm(int giaSaukm) {
+        this.giaSaukm = giaSaukm;
+    }
+
     public int getThanhTien() {
         return thanhTien;
     }
@@ -75,8 +85,9 @@ public class Model_HoaDonChiTiet02 {
     public void setThanhTien(int thanhTien) {
         this.thanhTien = thanhTien;
     }
+
     
     public Object[] toDataRow() {
-        return new Object[] {getId(), getMaSp(), getTenSp(), getSoLuong(), getGia(), getSoLuong() * getGia()};
+        return new Object[] {getId(), getMaSp(), getTenSp(), getSoLuong(), getGia(),getGiaSaukm(), getSoLuong() * getGiaSaukm()};
     }
 }

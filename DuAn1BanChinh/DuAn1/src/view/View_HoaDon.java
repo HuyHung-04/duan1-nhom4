@@ -96,11 +96,11 @@ public class View_HoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã hoá đơn", "Tổng tiền", "Tên Voucher", "Ngày tạo", "Trạng thái", "Tên nhân viên", "Tên khách hàng"
+                "Mã hoá đơn", "Tổng tiền", "Tổng tiền sau voucher", "Tên Voucher", "Ngày tạo", "Trạng thái", "Tên nhân viên", "Tên khách hàng"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -203,11 +203,11 @@ public class View_HoaDon extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã hoá đơn chi tiết", "Mã sản phẩm", "Tên sản phẩm chi tiết", "Số lượng", "Đơn giá", "Thành tiền"
+                "Mã hoá đơn chi tiết", "Mã sản phẩm", "Tên sản phẩm chi tiết", "Số lượng", "Đơn giá", "Đơn giá sau giảm giá", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

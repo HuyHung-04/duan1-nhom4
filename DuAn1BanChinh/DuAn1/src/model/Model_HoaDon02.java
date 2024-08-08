@@ -11,8 +11,10 @@ import java.util.UUID;
  * @author lcinu
  */
 public class Model_HoaDon02 {
+
     private UUID ma;
-    private int tongTien;
+    private int tongTienTruocVch;
+    private int tongTienSauVch;
     private String tenVoucher;
     private String ngayTao;
     private int trangThai;
@@ -22,9 +24,10 @@ public class Model_HoaDon02 {
     public Model_HoaDon02() {
     }
 
-    public Model_HoaDon02(UUID ma, int tongTien, String tenVoucher, String ngayTao, int trangThai, String tenNhanVien, String tenKhachHang) {
+    public Model_HoaDon02(UUID ma, int tongTienTruocVch, int tongTienSauVch, String tenVoucher, String ngayTao, int trangThai, String tenNhanVien, String tenKhachHang) {
         this.ma = ma;
-        this.tongTien = tongTien;
+        this.tongTienTruocVch = tongTienTruocVch;
+        this.tongTienSauVch = tongTienSauVch;
         this.tenVoucher = tenVoucher;
         this.ngayTao = ngayTao;
         this.trangThai = trangThai;
@@ -40,12 +43,20 @@ public class Model_HoaDon02 {
         this.ma = ma;
     }
 
-    public int getTongTien() {
-        return tongTien;
+    public int getTongTienTruocVch() {
+        return tongTienTruocVch;
     }
 
-    public void setTongTien(int tongTien) {
-        this.tongTien = tongTien;
+    public void setTongTienTruocVch(int tongTienTruocVch) {
+        this.tongTienTruocVch = tongTienTruocVch;
+    }
+
+    public int getTongTienSauVch() {
+        return tongTienSauVch;
+    }
+
+    public void setTongTienSauVch(int tongTienSauVch) {
+        this.tongTienSauVch = tongTienSauVch;
     }
 
     public String getTenVoucher() {
@@ -88,8 +99,7 @@ public class Model_HoaDon02 {
         this.tenKhachHang = tenKhachHang;
     }
 
-    
     public Object[] toDataRow() {
-        return new Object[] {getMa(), getTongTien(),getTenVoucher(), getNgayTao(), getTrangThai() == 1 ? "Đã thanh toán":"Chưa thanh toán", getTenNhanVien(), getTenKhachHang()};
+        return new Object[]{getMa(),getTongTienTruocVch(),getTongTienSauVch(), getTenVoucher(), getNgayTao(), getTrangThai() == 1 ? "Đã thanh toán" : "Chưa thanh toán", getTenNhanVien(), getTenKhachHang()};
     }
 }

@@ -143,11 +143,24 @@ public class Service_HoaDon {
     public ArrayList<Model_HoaDon02> getAllBanHang(String id, int ngay, int thang, String nam, String ten) {
         ArrayList<Model_HoaDon02> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("""
-              SELECT hd.MaHoaDon, hd.TongTien,v.TenVoucher, hd.NgayTao, hd.TrangThai, nv.TenNhanVien, kh.TenKhachHang FROM HoaDon hd
-              LEFT JOIN NhanVien nv ON hd.ID_NhanVien = nv.ID_NhanVien
-              LEFT JOIN KhachHang kh ON hd.ID_KhachHang = kh.ID_KhachHang
-              LEFT JOIN Voucher v ON hd.ID_Voucher = v.ID_Voucher
-              WHERE hd.TrangThai = 1 AND nv.TenNhanVien LIKE ?""");
+                SELECT 
+                    hd.MaHoaDon, 
+                    CASE
+                        WHEN v.PhanTramGiamGia IS NOT NULL AND v.PhanTramGiamGia > 0
+                        THEN hd.TongTien / (1 - v.PhanTramGiamGia / 100.0)
+                        ELSE hd.TongTien
+                    END AS TongTienTruocVoucher,
+                    hd.TongTien AS TongTienSauVoucher,
+                    COALESCE(v.TenVoucher, N'Không áp dụng') AS TenVoucher,
+                    hd.NgayTao,
+                    hd.TrangThai,
+                    nv.TenNhanVien,
+                    kh.TenKhachHang
+                FROM HoaDon hd
+                LEFT JOIN NhanVien nv ON hd.ID_NhanVien = nv.ID_NhanVien
+                LEFT JOIN KhachHang kh ON hd.ID_KhachHang = kh.ID_KhachHang
+                LEFT JOIN Voucher v ON hd.ID_Voucher = v.ID_Voucher
+                WHERE hd.TrangThai = 1 AND nv.TenNhanVien LIKE ?""");
         if (ngay != 0) {
             sql.append(" AND DAY(hd.NgayTao) = ").append(ngay);
         }
@@ -157,19 +170,19 @@ public class Service_HoaDon {
         if (!nam.equals("Chọn năm")) {
             sql.append(" AND YEAR(hd.NgayTao) = ").append(nam);
         }
-//        sql.append(" ORDER BY hd.NgayTao DESC");
         try {
             ps = c.prepareStatement(sql.toString());
             ps.setString(1, "%" + ten + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 UUID maHoaDon = UUID.fromString(rs.getString(1));
-                String tenVoucher = rs.getString(3);
-                if (tenVoucher == null) {
-                    tenVoucher = "Không áp dụng";
-                }
-                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), tenVoucher, rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
-//                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), tenVoucher, rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
+                int tongTienTruocVoucher = rs.getInt(2);
+                int tongTienSauVoucher = rs.getInt(3);
+                String tenVoucher = rs.getString(4);
+//                if (tenVoucher == null) {
+//                    tenVoucher = "Không áp dụng";
+//                }
+                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), rs.getInt(3), tenVoucher, rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
             }
             return list;
 
@@ -182,7 +195,20 @@ public class Service_HoaDon {
     public ArrayList<Model_HoaDon02> getIdHoaDon() {
         ArrayList<Model_HoaDon02> list = new ArrayList<>();
         String sql = """
-              SELECT hd.MaHoaDon, hd.TongTien, v.TenVoucher, hd.NgayTao, hd.TrangThai, nv.TenNhanVien, kh.TenKhachHang FROM HoaDon hd
+              SELECT 
+                  hd.MaHoaDon, 
+                  CASE
+                      WHEN v.PhanTramGiamGia IS NOT NULL AND v.PhanTramGiamGia > 0
+                      THEN hd.TongTien / (1 - v.PhanTramGiamGia / 100.0)
+                      ELSE hd.TongTien
+                  END AS TongTienTruocVoucher,
+                  hd.TongTien AS TongTienSauVoucher,
+                  COALESCE(v.TenVoucher, N'Không áp dụng') AS TenVoucher,
+                  hd.NgayTao,
+                  hd.TrangThai,
+                  nv.TenNhanVien,
+                  kh.TenKhachHang
+              FROM HoaDon hd
               LEFT JOIN NhanVien nv ON hd.ID_NhanVien = nv.ID_NhanVien
               LEFT JOIN KhachHang kh ON hd.ID_KhachHang = kh.ID_KhachHang
               LEFT JOIN Voucher v ON hd.ID_Voucher = v.ID_Voucher""";
@@ -192,11 +218,13 @@ public class Service_HoaDon {
             rs = ps.executeQuery();
             while (rs.next()) {
                 UUID maHoaDon = UUID.fromString(rs.getString(1));
-                String tenVoucher = rs.getString(3);
-                if (tenVoucher == null) {
-                    tenVoucher = "Không áp dụng";
-                }
-                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), tenVoucher, rs.getString(4), rs.getInt(5), rs.getString(6), rs.getString(7)));
+                int tongTienTruocVoucher = rs.getInt(2);
+                int tongTienSauVoucher = rs.getInt(3);
+                String tenVoucher = rs.getString(4);
+//                if (tenVoucher == null) {
+//                    tenVoucher = "Không áp dụng";
+//                }
+                list.add(new Model_HoaDon02(maHoaDon, rs.getInt(2), rs.getInt(3), tenVoucher, rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(8)));
             }
             return list;
 
@@ -209,10 +237,19 @@ public class Service_HoaDon {
     public ArrayList<Model_HoaDonChiTiet02> getHoaDonChiTietById(UUID idHd) {
         ArrayList<Model_HoaDonChiTiet02> list = new ArrayList<>();
         sql = """
-              SELECT cthd.ID_ChiTietHoaDon, spct.MaSanPhamChiTiet, spct.TenSanPham, cthd.SoLuong, spct.Gia, cthd.SoLuong * spct.Gia FROM ChiTietHoaDon cthd 
-              LEFT JOIN SanPhamChiTiet spct ON cthd.ID_SanPhamChiTiet = spct.ID_SanPhamChiTiet
-              LEFT JOIN HoaDon hd ON cthd.ID_HoaDon = hd.ID_HoaDon
-              WHERE hd.MaHoaDon = ?
+              SELECT 
+                    cthd.ID_ChiTietHoaDon, 
+                    spct.MaSanPhamChiTiet, 
+                    spct.TenSanPham, 
+                    cthd.SoLuong, 
+                    spct.Gia, 
+                    COALESCE(spct.Gia - (spct.Gia * gg.PhanTramGiamGia / 100), spct.Gia) AS DonGiaSauKhuyenMai, 
+                    cthd.SoLuong * COALESCE(spct.Gia - (spct.Gia * gg.PhanTramGiamGia / 100), spct.Gia) AS TongTienSauKhuyenMai
+                    FROM ChiTietHoaDon cthd
+                    LEFT JOIN SanPhamChiTiet spct ON cthd.ID_SanPhamChiTiet = spct.ID_SanPhamChiTiet
+                    LEFT JOIN HoaDon hd ON cthd.ID_HoaDon = hd.ID_HoaDon
+                    LEFT JOIN GiamGia gg ON spct.ID_GiamGia = gg.ID_GiamGia
+                    WHERE hd.MaHoaDon = ?
               """;
 
         try {
@@ -223,7 +260,7 @@ public class Service_HoaDon {
             rs = ps.executeQuery();
 
             while (rs.next()) {
-                list.add(new Model_HoaDonChiTiet02(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6)));
+                list.add(new Model_HoaDonChiTiet02(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getInt(5), rs.getInt(6), rs.getInt(7)));
             }
             return list;
         } catch (Exception e) {
