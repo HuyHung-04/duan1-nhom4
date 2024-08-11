@@ -338,6 +338,7 @@ public class View_NhanVien extends javax.swing.JPanel {
         cbbChucVu.setSelectedItem(cv);
         String tt = tblNhanVien.getValueAt(i, 7).toString();
         cbbTrangThai.setSelectedItem(tt);
+        txtMaNhanVien.setEnabled(false);
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
@@ -440,6 +441,7 @@ public class View_NhanVien extends javax.swing.JPanel {
         cbbChucVu.setSelectedIndex(0);
         cbbTrangThai.setSelectedIndex(0);
         txtTimKiem.setText("");
+        txtMaNhanVien.setEnabled(true);
         fillTable(serNV.getAll());
     }//GEN-LAST:event_btnLamMoiActionPerformed
 

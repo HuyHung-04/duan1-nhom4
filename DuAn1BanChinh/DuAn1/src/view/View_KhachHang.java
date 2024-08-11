@@ -323,11 +323,11 @@ Model_KhachHang readForm(){
         return null;
     }
     dc = txtDiaChi.getText();
-//    if(sdt.trim().isEmpty()){
-//        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
-//        txtDiaChi.requestFocus();
-//        return null;
-//    }
+    if(dc.trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "Địa chỉ không được để trống","",JOptionPane.ERROR_MESSAGE);
+        txtDiaChi.requestFocus();
+        return null;
+    }
     String trangThai = (String) cbbTrangThai.getSelectedItem();
         if (trangThai != null && trangThai.equals("Dừng hoạt động")) {
             tt = false;

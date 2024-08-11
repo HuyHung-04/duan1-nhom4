@@ -58,6 +58,7 @@ public class Service_KhuyenMai {
                 Date ngayHetHan = cal.getTime();
                 if (currentDate.after(ngayHetHan) && trangthai) {
                     updateKhuyenMaiStatus(id, false);
+                    dungKhuyenMai(ma);
                     trangthai = false;
                 }
                 KhuyenMai km = new KhuyenMai(id, ma, phantram, ngaybd, ngaykt, trangthai);

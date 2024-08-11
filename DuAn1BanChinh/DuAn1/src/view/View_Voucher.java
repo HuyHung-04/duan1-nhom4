@@ -362,6 +362,7 @@ public class View_Voucher extends javax.swing.JPanel {
             e.printStackTrace();
         }
         cbbTrangThai.setSelectedItem(tblVoucher.getValueAt(i, 7).toString());
+        txtMa.setEnabled(false);
 
     }//GEN-LAST:event_tblVoucherMouseClicked
 
@@ -386,9 +387,19 @@ public class View_Voucher extends javax.swing.JPanel {
             txtMa.requestFocus();
             return null;
         }
+        if (ma.startsWith(" ")) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng", "", JOptionPane.ERROR_MESSAGE);
+            txtMa.requestFocus();
+            return null;
+        }
         ten = txtTen.getText();
         if (ten.trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tên không được để trống", "", JOptionPane.ERROR_MESSAGE);
+            txtTen.requestFocus();
+            return null;
+        }
+        if (ten.startsWith(" ")) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng", "", JOptionPane.ERROR_MESSAGE);
             txtTen.requestFocus();
             return null;
         }
@@ -399,6 +410,15 @@ public class View_Voucher extends javax.swing.JPanel {
             return null;
         }
         try {
+            if (!slStr.matches("\\d+")) {
+                if (slStr.matches("\\s*\\d+\\s*")) {
+                    JOptionPane.showMessageDialog(this, "Sai định dạng", "", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Số lượng phải nhập số", "", JOptionPane.ERROR_MESSAGE);
+                }
+                txtSoLuong.requestFocus();
+                return null;
+            }
             sl = Integer.valueOf(slStr);
             if (sl <= 0) {
                 JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
@@ -417,14 +437,25 @@ public class View_Voucher extends javax.swing.JPanel {
             return null;
         }
         try {
+            if (!phantram.matches("\\d+")) {
+                if (phantram.matches("\\s*\\d+\\s*")) {
+                    JOptionPane.showMessageDialog(this, "Sai định dạng", "", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải nhập số", "", JOptionPane.ERROR_MESSAGE);
+                }
+                txtPhanTram.requestFocus();
+                return null;
+            }
             int phantramvalue = Integer.valueOf(phantram);
-            if (phantramvalue <= 0) {
-                JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải lớn hơn 0", "", JOptionPane.ERROR_MESSAGE);
+            if (phantramvalue <= 0 || phantramvalue > 100) {
+                JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải lớn hơn 0 và nhỏ hơn 100", "", JOptionPane.ERROR_MESSAGE);
                 txtPhanTram.requestFocus();
                 return null;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Phần trăm giảm giá phải nhập số", "", JOptionPane.ERROR_MESSAGE);
+            txtPhanTram.requestFocus();
+            return null;
         }
         Date ngaybd = dateNgayBatDau.getDate();
         if (ngaybd == null) {
@@ -454,50 +485,35 @@ public class View_Voucher extends javax.swing.JPanel {
         return new Model_Voucher(ma, ten, sl, phantram, ngaybdStr, ngayktStr, tt);
     }
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-//        i = tblVoucher.getSelectedRow();
-//        if (i == -1) {
-//            JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa", "", JOptionPane.WARNING_MESSAGE);
-//            return;
-//        }
-//        int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
-//        Model_Voucher selectedVoucher = serVc.getById(id);
-//        if (selectedVoucher != null && !selectedVoucher.isTrangThai()) {
-//            JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì voucher đã quá hạn", "", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//        if (readForm() != null) {
-//            serVc.Sua(id, this.readForm());
-//            this.fillTable(serVc.getAll());
-//            JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-//        }
         i = tblVoucher.getSelectedRow();
         if (i == -1) {
             JOptionPane.showMessageDialog(this, "Hãy chọn 1 dòng để sửa", "", JOptionPane.WARNING_MESSAGE);
             return;
         }
         int id = Integer.valueOf(tblVoucher.getValueAt(i, 0).toString());
-        Model_Voucher selectedVoucher = serVc.getById(id);
-        Model_Voucher updatedVoucher = readForm();
+        Model_Voucher checkTrangThai = serVc.getById(id);
+        Model_Voucher capNhap = readForm();
 
-        if (selectedVoucher != null) {
+        if (capNhap == null) {
+            return;
+        }
+
+        if (checkTrangThai != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             try {
-                Date currentDate = new Date();
-                Date newEndDate = sdf.parse(updatedVoucher.getNgayKetThuc());
-
-                if (!selectedVoucher.isTrangThai() && newEndDate.before(currentDate)) {
-                    JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì voucher đã quá hạn", "", JOptionPane.ERROR_MESSAGE);
-                    return;
+                Date ngayHienTai = new Date();
+                Date ngayKT = sdf.parse(capNhap.getNgayKetThuc());
+                if (!checkTrangThai.isTrangThai() && ngayKT.before(ngayHienTai)) {
+                    if (checkTrangThai.isTrangThai() != capNhap.isTrangThai()) {
+                        JOptionPane.showMessageDialog(this, "Không thể sửa trạng thái vì voucher đã quá hạn", "", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 }
-
-                if (updatedVoucher != null) {
-                    serVc.Sua(id, updatedVoucher);
-                    this.fillTable(serVc.getAll());
-                    JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
-                }
+                serVc.Sua(id, capNhap);
+                this.fillTable(serVc.getAll());
+                JOptionPane.showMessageDialog(this, "Sửa thành công", "", JOptionPane.INFORMATION_MESSAGE);
             } catch (Exception e) {
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(this, "Lỗi trong quá trình xử lý ngày tháng", "", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnSuaActionPerformed
@@ -523,6 +539,7 @@ public class View_Voucher extends javax.swing.JPanel {
         dateNgayKetThuc.setDate(null);
         cbbTrangThai.setSelectedIndex(0);
         txtTimKiem.setText("");
+        txtMa.setEnabled(true);
         fillTable(serVc.getAll());
     }//GEN-LAST:event_btnLamMoiActionPerformed
 

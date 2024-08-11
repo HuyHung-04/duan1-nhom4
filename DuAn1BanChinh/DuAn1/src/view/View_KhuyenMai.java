@@ -101,8 +101,12 @@ public class View_KhuyenMai extends javax.swing.JPanel {
         } else if (datekt.getDate() == null) {
             JOptionPane.showMessageDialog(this, "Ngày kết thúc không được để trống", "", JOptionPane.ERROR_MESSAGE);
             return false;
-        } else {
-
+        }
+         else if (txtPhantram.getText().startsWith(" ") || txtMaKM.getText().startsWith(" ")) {
+            JOptionPane.showMessageDialog(this, "Sai định dạng", "", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        else {
             return true;
         }
     }
@@ -118,8 +122,8 @@ public class View_KhuyenMai extends javax.swing.JPanel {
     }
 
     public boolean checkso() {
-        if (Double.parseDouble(txtPhantram.getText()) <= 0) {
-            JOptionPane.showMessageDialog(this, "Phần trăm khuyến mại không được âm", "", JOptionPane.ERROR_MESSAGE);
+        if (Double.parseDouble(txtPhantram.getText()) <= 0 || Double.parseDouble(txtPhantram.getText()) > 100) {
+            JOptionPane.showMessageDialog(this, "Phần trăm khuyến mại phải lớn hơn 0 và nhỏ hơn 100", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -127,7 +131,7 @@ public class View_KhuyenMai extends javax.swing.JPanel {
 
     public boolean check() {
         if (datebatdau.getDate().after(datekt.getDate())) {
-            JOptionPane.showMessageDialog(this, "Ngày bắt đầu phải trước ngày kết thúc", "", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Ngày kết thúc phải sau ngày bắt đầu", "", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
@@ -442,25 +446,6 @@ public class View_KhuyenMai extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnGiamGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiamGiaActionPerformed
-//        int indexGg = tblGiamGia.getSelectedRow();
-//        int indexSp = tblSpKm.getSelectedRow();
-//
-//        if (indexSp != -1) {
-//            if (btnGiamGia.getText().equals("Chọn")) {
-//
-//                qlykm.chonKhuyenMai(qlykm.getAll().get(indexGg).getId(), qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
-//                btnGiamGia.setText("Bỏ chọn");
-//            } else if (btnGiamGia.getText().equals("Bỏ chọn")) {
-//
-//                qlykm.boChonKhuyenMai(qlykm.getSanPhamChiTiet(qlykm.getAll().get(indexGg).getId()).get(indexSp).getId());
-//                btnGiamGia.setText("Chọn");
-//            }
-//
-//            this.fillTable();
-//            tblGiamGia.setRowSelectionInterval(indexGg, indexGg);
-//            fillTableSanPhamKM();
-//            tblSpKm.setRowSelectionInterval(indexSp, indexSp);
-//        }
         int indexGg = tblGiamGia.getSelectedRow();
         int indexSp = tblSpKm.getSelectedRow();
 

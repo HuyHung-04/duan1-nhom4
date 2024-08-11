@@ -990,7 +990,7 @@ public class View_BanHang extends javax.swing.JPanel {
         lblMaHoaDon.setText("");
         cbbVoucher.setSelectedIndex(0);
         txtTongTien.setText("0.0");
-        txtThanhTien.setText("");
+        txtThanhTien.setText("0.0");
         fillTableSanPhamCHiTiet(sspct.getAllSPBanHang());
         int rowCount = tblHoaDonCho.getRowCount();
         if (rowCount > 0) {
@@ -1079,6 +1079,7 @@ public class View_BanHang extends javax.swing.JPanel {
         fillTableSanPhamCHiTiet(sspct.getAllSPBanHang());
         txtTongTien.setText("0.0");
         txtThanhTien.setText("0.0");
+        lblMaHoaDon.setText("");
         fillTableHoaDon(hdsvr.getAllBanHang());
         JOptionPane.showMessageDialog(this, "Huỷ hoá đơn chờ thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnHuyDonHangActionPerformed
